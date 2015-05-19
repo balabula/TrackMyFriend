@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BA814A1A49DA1800E65899 /* AppDelegate.swift */; };
-		81BA814D1A49DA1800E65899 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BA814C1A49DA1800E65899 /* ViewController.swift */; };
+		81BA814D1A49DA1800E65899 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BA814C1A49DA1800E65899 /* LoginViewController.swift */; };
 		81BA81501A49DA1800E65899 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81BA814E1A49DA1800E65899 /* Main.storyboard */; };
 		81BA81521A49DA1800E65899 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81BA81511A49DA1800E65899 /* Images.xcassets */; };
 		81BA81701A49DB6800E65899 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA816B1A49DB6800E65899 /* Bolts.framework */; };
@@ -21,13 +21,22 @@
 		81BA817D1A49E0EA00E65899 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA817C1A49E0EA00E65899 /* MobileCoreServices.framework */; };
 		81BA817F1A49E0F000E65899 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA817E1A49E0F000E65899 /* libstdc++.6.dylib */; };
 		81BA81811A49E10C00E65899 /* ParseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA81801A49E10C00E65899 /* ParseUI.framework */; };
+		8E4A0AA01B0AE347008E249B /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4A0A9F1B0AE347008E249B /* RegisterViewController.swift */; };
+		8E4A0AA31B0AE363008E249B /* mydatabase.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8E4A0AA11B0AE363008E249B /* mydatabase.xcdatamodeld */; };
+		8E4A0AD71B0AE58F008E249B /* FriendsTableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4A0AD61B0AE58F008E249B /* FriendsTableTableViewController.swift */; };
+		8E4A0AD91B0AE5D4008E249B /* MyPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4A0AD81B0AE5D4008E249B /* MyPostViewController.swift */; };
+		8E4A0ADB1B0AE60A008E249B /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4A0ADA1B0AE60A008E249B /* MapViewController.swift */; };
+		8E4A0ADF1B0AFBF2008E249B /* FriendRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4A0ADE1B0AFBF2008E249B /* FriendRequestViewController.swift */; };
+		8E4A0AE11B0AFC3F008E249B /* MyAccountTableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4A0AE01B0AFC3F008E249B /* MyAccountTableTableViewController.swift */; };
+		8E4A0AE31B0B0166008E249B /* SearchFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4A0AE21B0B0166008E249B /* SearchFriendViewController.swift */; };
+		8E4A0AE51B0B1377008E249B /* SendFriendRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4A0AE41B0B1377008E249B /* SendFriendRequestViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		81BA81451A49DA1800E65899 /* ParseStarterProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ParseStarterProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		81BA81451A49DA1800E65899 /* TrackYourFriends.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrackYourFriends.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		81BA81491A49DA1800E65899 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		81BA814A1A49DA1800E65899 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		81BA814C1A49DA1800E65899 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		81BA814C1A49DA1800E65899 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		81BA814F1A49DA1800E65899 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		81BA81511A49DA1800E65899 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		81BA816B1A49DB6800E65899 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
@@ -41,6 +50,15 @@
 		81BA817E1A49E0F000E65899 /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "usr/lib/libstdc++.6.dylib"; sourceTree = SDKROOT; };
 		81BA81801A49E10C00E65899 /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseUI.framework; sourceTree = "<group>"; };
 		81BA81821A49E27F00E65899 /* ParseStarterProject-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ParseStarterProject-Bridging-Header.h"; sourceTree = "<group>"; };
+		8E4A0A9F1B0AE347008E249B /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		8E4A0AA21B0AE363008E249B /* mydatabase.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = mydatabase.xcdatamodel; sourceTree = "<group>"; };
+		8E4A0AD61B0AE58F008E249B /* FriendsTableTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsTableTableViewController.swift; sourceTree = "<group>"; };
+		8E4A0AD81B0AE5D4008E249B /* MyPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPostViewController.swift; sourceTree = "<group>"; };
+		8E4A0ADA1B0AE60A008E249B /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		8E4A0ADE1B0AFBF2008E249B /* FriendRequestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendRequestViewController.swift; sourceTree = "<group>"; };
+		8E4A0AE01B0AFC3F008E249B /* MyAccountTableTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAccountTableTableViewController.swift; sourceTree = "<group>"; };
+		8E4A0AE21B0B0166008E249B /* SearchFriendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchFriendViewController.swift; sourceTree = "<group>"; };
+		8E4A0AE41B0B1377008E249B /* SendFriendRequestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendFriendRequestViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,7 +85,7 @@
 		81BA813C1A49DA1800E65899 = {
 			isa = PBXGroup;
 			children = (
-				81BA81471A49DA1800E65899 /* ParseStarterProject */,
+				81BA81471A49DA1800E65899 /* TrackYourFriends */,
 				81BA816A1A49DB5600E65899 /* Frameworks */,
 				81BA81461A49DA1800E65899 /* Products */,
 			);
@@ -76,20 +94,30 @@
 		81BA81461A49DA1800E65899 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				81BA81451A49DA1800E65899 /* ParseStarterProject.app */,
+				81BA81451A49DA1800E65899 /* TrackYourFriends.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		81BA81471A49DA1800E65899 /* ParseStarterProject */ = {
+		81BA81471A49DA1800E65899 /* TrackYourFriends */ = {
 			isa = PBXGroup;
 			children = (
 				81BA814A1A49DA1800E65899 /* AppDelegate.swift */,
-				81BA814C1A49DA1800E65899 /* ViewController.swift */,
-				81BA814E1A49DA1800E65899 /* Main.storyboard */,
+				81BA814C1A49DA1800E65899 /* LoginViewController.swift */,
 				81BA81511A49DA1800E65899 /* Images.xcassets */,
 				81BA81481A49DA1800E65899 /* Supporting Files */,
+				8E4A0A9F1B0AE347008E249B /* RegisterViewController.swift */,
+				8E4A0AA11B0AE363008E249B /* mydatabase.xcdatamodeld */,
+				8E4A0AD61B0AE58F008E249B /* FriendsTableTableViewController.swift */,
+				8E4A0AD81B0AE5D4008E249B /* MyPostViewController.swift */,
+				8E4A0ADA1B0AE60A008E249B /* MapViewController.swift */,
+				8E4A0ADE1B0AFBF2008E249B /* FriendRequestViewController.swift */,
+				8E4A0AE01B0AFC3F008E249B /* MyAccountTableTableViewController.swift */,
+				8E4A0AE21B0B0166008E249B /* SearchFriendViewController.swift */,
+				81BA814E1A49DA1800E65899 /* Main.storyboard */,
+				8E4A0AE41B0B1377008E249B /* SendFriendRequestViewController.swift */,
 			);
+			name = TrackYourFriends;
 			path = ParseStarterProject;
 			sourceTree = "<group>";
 		};
@@ -130,9 +158,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		81BA81441A49DA1800E65899 /* ParseStarterProject */ = {
+		81BA81441A49DA1800E65899 /* TrackYourFriends */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 81BA81641A49DA1800E65899 /* Build configuration list for PBXNativeTarget "ParseStarterProject" */;
+			buildConfigurationList = 81BA81641A49DA1800E65899 /* Build configuration list for PBXNativeTarget "TrackYourFriends" */;
 			buildPhases = (
 				81BA81411A49DA1800E65899 /* Sources */,
 				81BA81421A49DA1800E65899 /* Frameworks */,
@@ -143,9 +171,9 @@
 			);
 			dependencies = (
 			);
-			name = ParseStarterProject;
+			name = TrackYourFriends;
 			productName = ParseStarterProject;
-			productReference = 81BA81451A49DA1800E65899 /* ParseStarterProject.app */;
+			productReference = 81BA81451A49DA1800E65899 /* TrackYourFriends.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -162,7 +190,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 81BA81401A49DA1800E65899 /* Build configuration list for PBXProject "ParseStarterProject" */;
+			buildConfigurationList = 81BA81401A49DA1800E65899 /* Build configuration list for PBXProject "TrackYourFriends" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -175,7 +203,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				81BA81441A49DA1800E65899 /* ParseStarterProject */,
+				81BA81441A49DA1800E65899 /* TrackYourFriends */,
 			);
 		};
 /* End PBXProject section */
@@ -214,8 +242,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				81BA814D1A49DA1800E65899 /* ViewController.swift in Sources */,
+				8E4A0AD91B0AE5D4008E249B /* MyPostViewController.swift in Sources */,
+				8E4A0AD71B0AE58F008E249B /* FriendsTableTableViewController.swift in Sources */,
+				8E4A0AA01B0AE347008E249B /* RegisterViewController.swift in Sources */,
+				8E4A0AE11B0AFC3F008E249B /* MyAccountTableTableViewController.swift in Sources */,
+				8E4A0AE31B0B0166008E249B /* SearchFriendViewController.swift in Sources */,
+				8E4A0AE51B0B1377008E249B /* SendFriendRequestViewController.swift in Sources */,
+				81BA814D1A49DA1800E65899 /* LoginViewController.swift in Sources */,
+				8E4A0ADF1B0AFBF2008E249B /* FriendRequestViewController.swift in Sources */,
+				8E4A0AA31B0AE363008E249B /* mydatabase.xcdatamodeld in Sources */,
 				81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */,
+				8E4A0ADB1B0AE60A008E249B /* MapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -323,7 +360,7 @@
 				);
 				INFOPLIST_FILE = ParseStarterProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = TrackYourFriends;
 				SWIFT_OBJC_BRIDGING_HEADER = "ParseStarterProject/ParseStarterProject-Bridging-Header.h";
 			};
 			name = Debug;
@@ -339,7 +376,7 @@
 				);
 				INFOPLIST_FILE = ParseStarterProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = TrackYourFriends;
 				SWIFT_OBJC_BRIDGING_HEADER = "ParseStarterProject/ParseStarterProject-Bridging-Header.h";
 			};
 			name = Release;
@@ -347,7 +384,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		81BA81401A49DA1800E65899 /* Build configuration list for PBXProject "ParseStarterProject" */ = {
+		81BA81401A49DA1800E65899 /* Build configuration list for PBXProject "TrackYourFriends" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				81BA81621A49DA1800E65899 /* Debug */,
@@ -356,7 +393,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		81BA81641A49DA1800E65899 /* Build configuration list for PBXNativeTarget "ParseStarterProject" */ = {
+		81BA81641A49DA1800E65899 /* Build configuration list for PBXNativeTarget "TrackYourFriends" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				81BA81651A49DA1800E65899 /* Debug */,
@@ -366,6 +403,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		8E4A0AA11B0AE363008E249B /* mydatabase.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				8E4A0AA21B0AE363008E249B /* mydatabase.xcdatamodel */,
+			);
+			currentVersion = 8E4A0AA21B0AE363008E249B /* mydatabase.xcdatamodel */;
+			path = mydatabase.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 81BA813D1A49DA1800E65899 /* Project object */;
 }
