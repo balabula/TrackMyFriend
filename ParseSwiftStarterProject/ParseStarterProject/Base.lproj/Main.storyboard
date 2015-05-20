@@ -8,7 +8,7 @@
         <!--Login View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="LoginViewController" customModule="TrackYourFriends" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="LoginViewController" customModule="TrackYourFriends" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -41,6 +41,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
+                                    <action selector="didClickRegisterButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0ds-tw-ria"/>
                                     <segue destination="jXm-Jm-qdA" kind="modal" id="eW1-nY-E8j"/>
                                 </connections>
                             </button>
@@ -51,6 +52,7 @@
                                     <navigationItem id="F7v-PU-ILx">
                                         <barButtonItem key="rightBarButtonItem" title="Login" id="Duj-tn-ls0">
                                             <connections>
+                                                <action selector="didClickLoginButton:" destination="BYZ-38-t0r" id="UUW-t9-b6e"/>
                                                 <segue destination="9iG-fx-ct8" kind="modal" id="Sek-Ni-FiL"/>
                                             </connections>
                                         </barButtonItem>
@@ -63,6 +65,10 @@
                     <navigationItem key="navigationItem" id="zRc-O0-hFW">
                         <barButtonItem key="rightBarButtonItem" title="Login" id="wK3-4S-F0N"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="txtEmail" destination="yKy-wc-ywg" id="Kwr-2f-ylc"/>
+                        <outlet property="txtPassword" destination="5yg-50-RfO" id="Mup-l7-N7U"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -674,12 +680,12 @@
                                     <navigationItem id="c1a-sj-1sh">
                                         <barButtonItem key="leftBarButtonItem" title="Cancel" id="zLg-69-3r9">
                                             <connections>
-                                                <segue destination="qNK-ON-Ev6" kind="unwind" unwindAction="unwindByCancelButton:" id="Guo-j1-yIB"/>
+                                                <segue destination="qNK-ON-Ev6" kind="unwind" identifier="exitSegue" unwindAction="unwindByCancelButton:" id="Guo-j1-yIB"/>
                                             </connections>
                                         </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" title="Register" id="KDa-fl-NPT">
                                             <connections>
-                                                <segue destination="qNK-ON-Ev6" kind="unwind" unwindAction="unwindByRegisterButton:" id="zee-ES-rzg"/>
+                                                <action selector="didClickRegisterButton:" destination="jXm-Jm-qdA" id="M2G-Be-TAq"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
@@ -692,6 +698,12 @@
                         <barButtonItem key="leftBarButtonItem" title="Cancel" id="Zqt-QX-bTX"/>
                         <barButtonItem key="rightBarButtonItem" title="Register" id="Dc7-Fs-qhr"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="txtEmail" destination="Y3p-9q-keB" id="uft-4T-Hf0"/>
+                        <outlet property="txtPwd" destination="NrP-BY-nmS" id="TOG-5N-sZq"/>
+                        <outlet property="txtPwdRpt" destination="q1Y-Nv-Ml9" id="Vzs-gw-WCS"/>
+                        <outlet property="txtUsername" destination="uzA-cG-M3b" id="BWX-kP-yaM"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2YZ-uq-bkz" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="qNK-ON-Ev6" userLabel="Exit" sceneMemberID="exit"/>
