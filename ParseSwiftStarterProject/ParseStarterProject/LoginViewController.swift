@@ -7,16 +7,19 @@
 import UIKit
 import Parse
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
 
 
-    @IBOutlet weak var txtEmail: UITextField!
     @IBOutlet weak var txtPassword: UITextField!
+    @IBOutlet weak var txtUsername: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         println("Started")
+        self.txtPassword.delegate = self
+        self.txtUsername.delegate = self
+        self.txtPassword.secureTextEntry = true
         // Do any additional setup after loading the view, typically from a nib.
 //        let user = PFUser()
 //        user.username = "my name"
@@ -62,11 +65,38 @@ class LoginViewController: UIViewController {
     @IBAction func unwindByRegisterButton(segue: UIStoryboardSegue) {
         println("Press Register Button")
     }
-    @IBAction func didClickRegisterButton(sender: AnyObject) {
-        println("Click New User Button")
-    }
+    
     @IBAction func didClickLoginButton(sender: AnyObject) {
         println("Click Login Button")
+        checkCredential(name: self.txtUsername.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()), pwd: self.txtPassword.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()))
+
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.endEditing(true)
+        return true
+    }
+    
+    func checkCredential(#name: String, pwd: String) {
+        
+        PFUser.logInWithUsernameInBackground(name, password: pwd, block: loginCompletionBlock)
+            
+
+    }
+    
+    lazy var loginCompletionBlock: (PFUser?, NSError?) -> Void = {
+        [unowned self] (user: PFUser?, error: NSError?) -> Void in
+            println("user = \(user), error = \(error)")
+        
+        if let err = error {
+            println("Wrong Password")
+            var alert = UIAlertView(title: "Notice", message: "The entered password is not correct", delegate: nil, cancelButtonTitle: "OK")
+            alert.show()
+        } else {
+            // Go to new Page
+            self.performSegueWithIdentifier("segue", sender: self)
+        }
+       
     }
 
 }

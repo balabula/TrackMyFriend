@@ -20,7 +20,7 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email Address" minimumFontSize="17" id="yKy-wc-ywg">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" minimumFontSize="17" id="yKy-wc-ywg">
                                 <rect key="frame" x="16" y="324" width="288" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <accessibility key="accessibilityConfiguration" hint=""/>
@@ -41,7 +41,6 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="didClickRegisterButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0ds-tw-ria"/>
                                     <segue destination="jXm-Jm-qdA" kind="modal" id="eW1-nY-E8j"/>
                                 </connections>
                             </button>
@@ -53,7 +52,6 @@
                                         <barButtonItem key="rightBarButtonItem" title="Login" id="Duj-tn-ls0">
                                             <connections>
                                                 <action selector="didClickLoginButton:" destination="BYZ-38-t0r" id="UUW-t9-b6e"/>
-                                                <segue destination="9iG-fx-ct8" kind="modal" id="Sek-Ni-FiL"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
@@ -66,8 +64,9 @@
                         <barButtonItem key="rightBarButtonItem" title="Login" id="wK3-4S-F0N"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="txtEmail" destination="yKy-wc-ywg" id="Kwr-2f-ylc"/>
                         <outlet property="txtPassword" destination="5yg-50-RfO" id="Mup-l7-N7U"/>
+                        <outlet property="txtUsername" destination="yKy-wc-ywg" id="usz-Rs-G9I"/>
+                        <segue destination="9iG-fx-ct8" kind="modal" identifier="segue" id="s9I-qf-NFI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

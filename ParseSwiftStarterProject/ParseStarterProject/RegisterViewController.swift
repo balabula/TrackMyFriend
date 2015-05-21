@@ -118,7 +118,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         [unowned self] (success:Bool, error: NSError?) -> Void in
 
         if error == nil {
-            var alert = UIAlertView(title: "Congradulations", message: "\(self.txtPwd.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())) has been registered", delegate: nil, cancelButtonTitle: "OK")
+            var alert = UIAlertView(title: "Congradulations", message: "\(self.txtEmail.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())) has been registered", delegate: nil, cancelButtonTitle: "OK")
 
             alert.show()
            
