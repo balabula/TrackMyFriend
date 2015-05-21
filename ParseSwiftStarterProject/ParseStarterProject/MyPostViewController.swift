@@ -11,12 +11,17 @@ import UIKit
 class MyPostViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var txtPost: UITextView!
+    @IBOutlet weak var btnPost: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.delegate = self
         self.tableView.dataSource = self
         // Do any additional setup after loading the view.
+        
+        self.txtPost.layer.borderWidth = 1.0
+        self.txtPost.layer.borderColor = UIColor.grayColor().CGColor
     }
 
     override func didReceiveMemoryWarning() {
@@ -47,5 +52,13 @@ class MyPostViewController: UIViewController, UITableViewDataSource, UITableView
         cell.textLabel!.text = "My Moment Example"
         return cell
         
+    }
+    @IBAction func didClickPostButton(sender: AnyObject) {
+        
+        getCurrentLocation()
+    }
+    
+    private func getCurrentLocation(){
+    
     }
 }

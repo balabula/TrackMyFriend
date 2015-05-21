@@ -17,6 +17,7 @@ class SendFriendRequestViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var txtMessage: UITextView!
     
     var friendRequested: PFUser?
+    var currentUser: PFUser?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +25,7 @@ class SendFriendRequestViewController: UIViewController, UITextViewDelegate {
         
         println("friendRequest = \(friendRequested)")
         // Do any additional setup after loading the view.
-        
+        self.currentUser = PFUser.currentUser()
         self.txtMessage.delegate = self
         
         // Update User Interface
@@ -39,6 +40,7 @@ class SendFriendRequestViewController: UIViewController, UITextViewDelegate {
         
         println("Send Message Clicked")
         sendMessage(message: txtMessage.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()), to: self.friendRequested!)
+
     }
     
     private func sendMessage(#message: String, to: PFUser){
@@ -48,31 +50,50 @@ class SendFriendRequestViewController: UIViewController, UITextViewDelegate {
         println("Message Saved: \(message)")
         
         // If contains the request already
-        if(isRequestExists()){
-        }else{
+        PFQuery(className: "FriendRequest", predicate: NSPredicate(format: "destUser = %@ && sourceUser = %@ && checked = %@", friendRequested!, self.currentUser!, false)).findObjectsInBackgroundWithBlock { (objs: [AnyObject]?, err: NSError?) -> Void in
             
-            friendRequest.setObject(message, forKey: "message")
-            friendRequest.setObject(PFUser.currentUser()!, forKey: "sourceUser")
-            friendRequest.setObject(self.friendRequested!, forKey: "destUser")
-            friendRequest.setObject(false, forKey: "checked")
+            // TODO: Dismiss Spinner
             
-            friendRequest.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
-                
-                if(!success){
-                    // Error Occurs
-                    println("error = \(error)")
-                    var alert = UIAlertView(title: "Notice", message: "Fail to send request. Please check internet connection", delegate: nil, cancelButtonTitle: "OK")
-                    alert.show()
-                    
+            if(err == nil){
+                if(objs?.count == 0){
+
+                    var access: PFACL  = PFACL()
+                    access.setPublicReadAccess(true)
+                    access.setPublicWriteAccess(true)
+
+                    friendRequest.ACL = access
+                    friendRequest.setObject(message, forKey: "message")
+                    friendRequest.setObject(self.currentUser!, forKey: "sourceUser")
+                    friendRequest.setObject(self.friendRequested!, forKey: "destUser")
+                    friendRequest.setObject(false, forKey: "checked")
+
+                    friendRequest.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
+                        
+                        if(!success){
+                            // Error Occurs
+                            println("error = \(error)")
+                            var alert = UIAlertView(title: "Notice", message: "Fail to send request. Please check internet connection", delegate: nil, cancelButtonTitle: "OK")
+                            alert.show()
+                            
+                        } else {
+                            // Popping up the UI
+                            dispatch_async(dispatch_get_main_queue()) {
+                                () -> Void in
+                                self.navigationController?.popToRootViewControllerAnimated(true)
+                            }
+                            
+                        }
+                    }
                 } else {
-                    // Popping up the UI
+                
+                    // Popping Up the UI
                     dispatch_async(dispatch_get_main_queue()) {
                         () -> Void in
                         self.navigationController?.popToRootViewControllerAnimated(true)
                     }
-                    
                 }
             }
+            
         }
         
     }
@@ -87,17 +108,6 @@ class SendFriendRequestViewController: UIViewController, UITextViewDelegate {
         
         return true
     }
-    /*
-    // MARK: - Navigation
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    // Get the new view controller using segue.destinationViewController.
-    // Pass the selected object to the new view controller.
-    }
-    */
-    
-    private func isRequestExists() -> Bool{
-        return false
-    }
+
+
 }

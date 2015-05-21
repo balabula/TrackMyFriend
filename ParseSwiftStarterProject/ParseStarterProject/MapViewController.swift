@@ -8,19 +8,35 @@
 
 import UIKit
 import MapKit
+import Parse
 
 class MapViewController: UIViewController {
 
+    var posts = [PFObject]()
+    
     @IBOutlet weak var mapView: MKMapView!
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        var mapCentre = CLLocationCoordinate2D(latitude: 12, longitude: 12)
+        var viewRegion = MKCoordinateRegionMakeWithDistance(mapCentre, 1000, 1000)
+        self.mapView.setRegion(viewRegion, animated: true)
+        
+        var annotation = MKPointAnnotation()
+        annotation.coordinate = viewRegion.center
+        annotation.title = "Title"
+        annotation.subtitle = "Subtitle"
+        self.mapView.addAnnotation(annotation)
+        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    private func addPostToUser(post: PFObject){
+        
     }
     
 
@@ -35,5 +51,4 @@ class MapViewController: UIViewController {
     */
     
     
-
 }

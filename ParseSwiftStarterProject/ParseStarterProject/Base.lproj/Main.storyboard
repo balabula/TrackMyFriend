@@ -277,13 +277,18 @@
                                 <state key="normal" title="Post">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="didClickPostButton:" destination="4Zr-NV-uZ0" eventType="touchUpInside" id="qs7-tY-rpt"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="My Moment" id="1XT-76-Mxo"/>
                     <connections>
+                        <outlet property="btnPost" destination="MPG-74-ltG" id="OQp-tR-h6h"/>
                         <outlet property="tableView" destination="vhd-BD-iEC" id="FEV-g3-EWU"/>
+                        <outlet property="txtPost" destination="gJe-07-CeC" id="OXD-7Z-oxc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ifC-CK-Dx4" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -391,7 +396,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tWW-vZ-DW2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1406" y="-467"/>
+            <point key="canvasLocation" x="1394" y="-479"/>
         </scene>
         <!--My Account-->
         <scene sceneID="PiY-6j-2wm">
@@ -602,7 +607,7 @@
                     <navigationItem key="navigationItem" title="Request Detail" id="QPe-xs-owV">
                         <barButtonItem key="rightBarButtonItem" title="Accept" id="oJN-ax-V8a">
                             <connections>
-                                <segue destination="VR9-it-rdX" kind="unwind" unwindAction="unwindByAcceptButton:" id="BLM-49-Uqj"/>
+                                <action selector="didClickAcceptButton:" destination="eTo-hz-a6h" id="qdf-OO-9mz"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -613,7 +618,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Av-qh-6fI" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="VR9-it-rdX" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2650" y="-392"/>
         </scene>

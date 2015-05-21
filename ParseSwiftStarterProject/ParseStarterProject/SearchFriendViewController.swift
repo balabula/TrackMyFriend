@@ -51,6 +51,8 @@ class SearchFriendViewController: UIViewController, UITableViewDelegate, UITable
         println("Search Friend")
         if(name != self.currentUser!.username){     // The current user is not searched
             var query = PFUser.queryWithPredicate(NSPredicate(format: "%K == %@", "username", name))
+            
+            // TODO: Check if already is your friends
             query?.getFirstObjectInBackgroundWithBlock(completionFetchUser)
         }
     }

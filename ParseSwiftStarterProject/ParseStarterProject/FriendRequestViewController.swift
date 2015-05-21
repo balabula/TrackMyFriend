@@ -27,7 +27,7 @@ class FriendRequestViewController: UITableViewController {
 
     private func retrieveFriendRequest(){
         
-        var query = PFQuery(className: "FriendRequest", predicate: NSPredicate(format: "destUser = %@", currentUser!))
+        var query = PFQuery(className: "FriendRequest", predicate: NSPredicate(format: "destUser = %@ && checked = %@", currentUser!, false))
         
 
         println(query.findObjectsInBackgroundWithBlock({ (objs:[AnyObject]?, error: NSError?) -> Void in
