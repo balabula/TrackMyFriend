@@ -24,6 +24,11 @@ class MyAccountTableTableViewController: UITableViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+
+    }
 
     // MARK: - Table view data source
 

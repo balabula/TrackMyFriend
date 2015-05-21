@@ -7,15 +7,67 @@
 //
 
 import UIKit
+import Parse
 
 class FriendRequestViewController: UITableViewController {
 
+    var friendRequest: [PFObject] = [PFObject]()
+    var sourceFriend: [PFObject] = [PFObject]()
+    var currentUser: PFUser?
+    var counter = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        self.currentUser = PFUser.currentUser()
+        
+        // Do any additional setup after loading the view..
+        retrieveFriendRequest()
     }
 
+    private func retrieveFriendRequest(){
+        
+        var query = PFQuery(className: "FriendRequest", predicate: NSPredicate(format: "destUser = %@", currentUser!))
+        
+
+        println(query.findObjectsInBackgroundWithBlock({ (objs:[AnyObject]?, error: NSError?) -> Void in
+            if(error != nil){
+                println("error = \(error)")
+            }else{
+                println("objs = \(objs)")
+                self.friendRequest = objs as! [PFObject]
+                self.counter = self.friendRequest.count
+                
+                // Get the Source User Array
+                for request in self.friendRequest {
+                    var objId = (request.valueForKey("sourceUser") as! PFUser).objectId!
+                    println("objectId = \(objId)")
+                    var query1 = PFQuery(className: "_User", predicate: NSPredicate(format: "objectId = %@", objId))
+                    query1.findObjectsInBackgroundWithBlock(self.completionRetrievingObject)
+                    
+//                    self.friendRequest.append(PFUser().objectForKey(objId) as! PFObject)
+                }
+
+
+            }
+        }))
+    
+        
+    }
+    
+    lazy var completionRetrievingObject: ([AnyObject]?, NSError?) -> Void = {
+        [unowned self] (objs:[AnyObject]?, error: NSError?) -> Void in
+        
+        println("Retriving for objId")
+        self.sourceFriend.append(objs![0] as! PFObject)
+        
+        self.counter -= 1
+        
+        if(self.counter == 0){
+            self.tableView.reloadData()
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -40,21 +92,35 @@ class FriendRequestViewController: UITableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return 1
+        
+        println("Row count = \(sourceFriend.count)")
+        return sourceFriend.count
     }
     
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell
         
-        cell.textLabel?.text = "Example Friend Request"
-        // Configure the cell...
+        
+        cell.textLabel?.text = (self.sourceFriend[indexPath.row].valueForKey("username") as? String)!
+//       println((self.friendRequest![indexPath.row].valueForKey("sourceUser") as! PFUser).username)
+//        cell.textLabel?.text = self.friendRequest[indexPath.row].valueForKey("username") as? String
+        println("Data: Request = \(self.friendRequest), Source User = \(self.sourceFriend)")
         
         return cell
     }
     
     @IBAction func unwindByAcceptButton(segue: UIStoryboardSegue) {
         
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if(segue.identifier == "segue"){
+            var destViewController: RequestDetailViewController = segue.destinationViewController as! RequestDetailViewController
+            destViewController.sourceFriend = self.sourceFriend[self.tableView.indexPathForSelectedRow()!.row]
+            destViewController.requestFriend = self.friendRequest[self.tableView.indexPathForSelectedRow()!.row]
+
+        }
     }
 
 }
