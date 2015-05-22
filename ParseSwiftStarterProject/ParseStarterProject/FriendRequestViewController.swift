@@ -30,7 +30,7 @@ class FriendRequestViewController: UITableViewController {
         var query = PFQuery(className: "FriendRequest", predicate: NSPredicate(format: "destUser = %@ && checked = %@", currentUser!, false))
         
 
-        println(query.findObjectsInBackgroundWithBlock({ (objs:[AnyObject]?, error: NSError?) -> Void in
+        query.findObjectsInBackgroundWithBlock({ (objs:[AnyObject]?, error: NSError?) -> Void in
             if(error != nil){
                 println("error = \(error)")
             }else{
@@ -50,7 +50,7 @@ class FriendRequestViewController: UITableViewController {
 
 
             }
-        }))
+        })
     
         
     }
@@ -122,5 +122,7 @@ class FriendRequestViewController: UITableViewController {
 
         }
     }
+    
+
 
 }

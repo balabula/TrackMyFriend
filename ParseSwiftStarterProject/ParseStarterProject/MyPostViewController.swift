@@ -7,40 +7,106 @@
 //
 
 import UIKit
+import CoreLocation
+import Parse
 
-class MyPostViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-
+// TODO: Add GPS Enable Detection
+class MyPostViewController: UIViewController, UITableViewDataSource, UITableViewDelegate{
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var txtPost: UITextView!
     @IBOutlet weak var btnPost: UIButton!
     
+    var manager: OneShotLocationManager?
+    var currentUser: PFUser?
+    var location: CLLocationCoordinate2D?
+    var posts = [PFObject]()
+    //    let locationManager = CLLocationManager()
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Location Manager
+        self.manager = OneShotLocationManager()
+        self.currentUser = PFUser.currentUser()
+        
         self.tableView.delegate = self
         self.tableView.dataSource = self
         // Do any additional setup after loading the view.
         
         self.txtPost.layer.borderWidth = 1.0
         self.txtPost.layer.borderColor = UIColor.grayColor().CGColor
+        
+        
+        // Retrieving My Post Record
+        retrieveMyPostRecords()
+        
+        //        // Ask for Authorisation from the User.
+        //        self.locationManager.requestAlwaysAuthorization()
+        //
+        //        // For use in foreground
+        //        self.locationManager.requestWhenInUseAuthorization()
+        //
+        //        println("load Location page")
+        //        if CLLocationManager.locationServicesEnabled() {
+        //
+        //            locationManager.delegate = self
+        //            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        //            locationManager.startUpdatingLocation()
+        //        } else {
+        //            println("Disabled")
+        //        }
+        
+        
     }
+    
+    private func retrieveMyPostRecords(){
+        var query = PFQuery(className: "Post", predicate: NSPredicate(format: "user = %@", self.currentUser!))
+        query.findObjectsInBackgroundWithBlock(completeRetrivingObjectsClosure)
+        
+    }
+    
+    lazy var completeRetrivingObjectsClosure: ([AnyObject]?, NSError?) -> Void = {
+        [unowned self](objs: [AnyObject]?, err: NSError?) -> Void in
 
+        println("retrieve Post = \(objs)")
+        if(err == nil){
+            for obj in objs! {
+                self.posts.append(obj as! PFObject)
+            }
+        }else{
+            // TODO: Add alert
+        }
+        println("post = \(self.posts)")
+        
+        // Refresh Table
+        self.tableView.reloadData()
+        
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+
     }
     
-
+    
+    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+        var locValue:CLLocationCoordinate2D = manager.location.coordinate
+        println("locations = \(locValue.latitude) \(locValue.longitude)")
+    }
+    
     /*
     // MARK: - Navigation
-
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    // Get the new view controller using segue.destinationViewController.
+    // Pass the selected object to the new view controller.
     }
     */
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return self.posts.count
     }
     
     func tableView(tableView: UITableView, sectionForSectionIndexTitle title: String, atIndex index: Int) -> Int {
@@ -49,7 +115,7 @@ class MyPostViewController: UIViewController, UITableViewDataSource, UITableView
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
         var cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell
-        cell.textLabel!.text = "My Moment Example"
+        cell.textLabel!.text = self.posts[indexPath.row].valueForKey("content") as?  String
         return cell
         
     }
@@ -58,7 +124,80 @@ class MyPostViewController: UIViewController, UITableViewDataSource, UITableView
         getCurrentLocation()
     }
     
+    lazy var retrieveLocationClosure: (CLLocation?, NSError?) -> Void = {
+        
+        [unowned self] (location: CLLocation?, error: NSError?) in
+        // fetch location or an error
+        if let loc = location {
+            self.location = loc.coordinate
+            
+            // Save the point
+            var point = self.savePoint()
+            self.savePost(point)
+            
+            self.tableView.reloadData()
+            
+            // Clear the text
+            self.txtPost.text = ""
+            
+            println("location = \(loc.description), latitide = \(loc.coordinate.latitude)")
+        } else if let err = error {
+            println(err.localizedDescription)
+            var alert = UIAlertView(title: "Notice", message: "GPS Service cannot be detected", delegate: nil, cancelButtonTitle: "OK")
+            alert.show()
+        }
+        
+    }
     private func getCurrentLocation(){
+        
+        manager = OneShotLocationManager()
+        manager!.fetchWithCompletion(retrieveLocationClosure)
+        
+    }
     
+    private func savePoint() -> PFObject{
+        var point: PFObject = PFObject(className: "Point")
+        point.setObject(self.location!.latitude, forKey: "latitude")
+        point.setObject(self.location!.longitude, forKey: "longitude")
+        var access = PFACL()
+        access.setPublicReadAccess(true)
+        access.setPublicWriteAccess(true)
+        point.ACL = access
+        
+        point.saveInBackground()
+        return point
+    }
+    
+    private func savePost(point: PFObject){
+        var post: PFObject = PFObject(className: "Post")
+        post.setObject(self.txtPost.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()), forKey: "content")
+        post.setObject(self.currentUser!, forKey: "user")
+        post.setObject(point, forKey: "point")
+        
+        var access = PFACL()
+        access.setPublicReadAccess(true)
+        access.setPublicWriteAccess(true)
+        post.ACL = access
+        
+        post.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
+            if(success){
+                var alert = UIAlertView(title: "Conguradulation", message: "You have successfully post a message", delegate: nil, cancelButtonTitle: "OK")
+                alert.show()
+                self.posts.append(post)
+                self.tableView.reloadData()
+            }
+        }
+
+        
+    }
+    
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+        if(segue.identifier == "segue"){
+            var destViewController: PostDetailViewController = segue.destinationViewController as! PostDetailViewController
+            destViewController.post = self.posts[self.tableView.indexPathForSelectedRow()!.row]
+        }
     }
 }

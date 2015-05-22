@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 class MyAccountTableTableViewController: UITableViewController {
 
@@ -27,7 +28,12 @@ class MyAccountTableTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-
+//        println("section = \(indexPath.section), row = \(indexPath.row)")
+//        if(indexPath.section == 2 && indexPath.row == 0){
+//            // Logging Out
+//            println("Login out")
+//            PFUser.logOut()
+//        }
     }
 
     // MARK: - Table view data source

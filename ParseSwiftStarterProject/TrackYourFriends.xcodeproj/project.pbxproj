@@ -29,7 +29,8 @@
 		8E4A0ADF1B0AFBF2008E249B /* FriendRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4A0ADE1B0AFBF2008E249B /* FriendRequestViewController.swift */; };
 		8E4A0AE11B0AFC3F008E249B /* MyAccountTableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4A0AE01B0AFC3F008E249B /* MyAccountTableTableViewController.swift */; };
 		8E4A0AE31B0B0166008E249B /* SearchFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4A0AE21B0B0166008E249B /* SearchFriendViewController.swift */; };
-		8EBC1A3D1B0DBF8C00CFF053 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBC1A3C1B0DBF8C00CFF053 /* Location.swift */; };
+		8EBC1A401B0EAB8500CFF053 /* OneShotLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBC1A3F1B0EAB8500CFF053 /* OneShotLocationManager.swift */; };
+		8EBC1A451B0EE1D200CFF053 /* PostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBC1A441B0EE1D200CFF053 /* PostDetailViewController.swift */; };
 		8EF7878A1B0C5242007320DA /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EF787671B0C5242007320DA /* AFHTTPRequestOperation.m */; };
 		8EF7878B1B0C5242007320DA /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EF787691B0C5242007320DA /* AFHTTPRequestOperationManager.m */; };
 		8EF7878C1B0C5242007320DA /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EF7876B1B0C5242007320DA /* AFHTTPSessionManager.m */; };
@@ -77,7 +78,8 @@
 		8E4A0ADE1B0AFBF2008E249B /* FriendRequestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendRequestViewController.swift; sourceTree = "<group>"; };
 		8E4A0AE01B0AFC3F008E249B /* MyAccountTableTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAccountTableTableViewController.swift; sourceTree = "<group>"; };
 		8E4A0AE21B0B0166008E249B /* SearchFriendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchFriendViewController.swift; sourceTree = "<group>"; };
-		8EBC1A3C1B0DBF8C00CFF053 /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		8EBC1A3F1B0EAB8500CFF053 /* OneShotLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OneShotLocationManager.swift; sourceTree = "<group>"; };
+		8EBC1A441B0EE1D200CFF053 /* PostDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailViewController.swift; sourceTree = "<group>"; };
 		8EF787661B0C5242007320DA /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
 		8EF787671B0C5242007320DA /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
 		8EF787681B0C5242007320DA /* AFHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperationManager.h; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 		81BA81471A49DA1800E65899 /* TrackYourFriends */ = {
 			isa = PBXGroup;
 			children = (
+				8EBC1A411B0EAB8900CFF053 /* LocationManager */,
 				8EBC1A3E1B0DBFA000CFF053 /* EntityClass */,
 				8EF787A11B0C52DE007320DA /* AFNetworking */,
 				81BA814A1A49DA1800E65899 /* AppDelegate.swift */,
@@ -172,9 +175,10 @@
 				8EF787A61B0D8F6C007320DA /* RequestDetailViewController.swift */,
 				8E4A0AD61B0AE58F008E249B /* FriendsTableTableViewController.swift */,
 				8E4A0AD81B0AE5D4008E249B /* MyPostViewController.swift */,
-				8E4A0AA11B0AE363008E249B /* mydatabase.xcdatamodeld */,
+				8EBC1A441B0EE1D200CFF053 /* PostDetailViewController.swift */,
 				8E4A0ADA1B0AE60A008E249B /* MapViewController.swift */,
 				8E4A0AE01B0AFC3F008E249B /* MyAccountTableTableViewController.swift */,
+				8E4A0AA11B0AE363008E249B /* mydatabase.xcdatamodeld */,
 				81BA814E1A49DA1800E65899 /* Main.storyboard */,
 			);
 			name = TrackYourFriends;
@@ -218,9 +222,16 @@
 		8EBC1A3E1B0DBFA000CFF053 /* EntityClass */ = {
 			isa = PBXGroup;
 			children = (
-				8EBC1A3C1B0DBF8C00CFF053 /* Location.swift */,
 			);
 			name = EntityClass;
+			sourceTree = "<group>";
+		};
+		8EBC1A411B0EAB8900CFF053 /* LocationManager */ = {
+			isa = PBXGroup;
+			children = (
+				8EBC1A3F1B0EAB8500CFF053 /* OneShotLocationManager.swift */,
+			);
+			name = LocationManager;
 			sourceTree = "<group>";
 		};
 		8EF787A11B0C52DE007320DA /* AFNetworking */ = {
@@ -361,6 +372,7 @@
 				8EF787931B0C5242007320DA /* AFNetworkActivityIndicatorManager.m in Sources */,
 				8EF787921B0C5242007320DA /* AFURLSessionManager.m in Sources */,
 				8EF7878C1B0C5242007320DA /* AFHTTPSessionManager.m in Sources */,
+				8EBC1A401B0EAB8500CFF053 /* OneShotLocationManager.swift in Sources */,
 				8E4A0AE31B0B0166008E249B /* SearchFriendViewController.swift in Sources */,
 				8EF7878D1B0C5242007320DA /* AFNetworkReachabilityManager.m in Sources */,
 				8EF787971B0C5242007320DA /* UIImageView+AFNetworking.m in Sources */,
@@ -378,8 +390,8 @@
 				8E4A0ADF1B0AFBF2008E249B /* FriendRequestViewController.swift in Sources */,
 				8EF7878E1B0C5242007320DA /* AFSecurityPolicy.m in Sources */,
 				8E4A0AA31B0AE363008E249B /* mydatabase.xcdatamodeld in Sources */,
-				8EBC1A3D1B0DBF8C00CFF053 /* Location.swift in Sources */,
 				8EF7879A1B0C5242007320DA /* UIWebView+AFNetworking.m in Sources */,
+				8EBC1A451B0EE1D200CFF053 /* PostDetailViewController.swift in Sources */,
 				81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */,
 				8E4A0ADB1B0AE60A008E249B /* MapViewController.swift in Sources */,
 				8EF787951B0C5242007320DA /* UIAlertView+AFNetworking.m in Sources */,

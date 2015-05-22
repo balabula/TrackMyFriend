@@ -66,6 +66,18 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         println("Press Register Button")
     }
     
+    @IBAction func unwindByLoggingOut(segue: UIStoryboardSegue) {
+        println("Press Logging Out button")
+        PFUser.logOut()
+        clearUI()
+    }
+
+    
+    private func clearUI(){
+        self.txtPassword.text = ""
+        self.txtUsername.text = ""
+    }
+    
     @IBAction func didClickLoginButton(sender: AnyObject) {
         println("Click Login Button")
         checkCredential(name: self.txtUsername.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()), pwd: self.txtPassword.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()))
