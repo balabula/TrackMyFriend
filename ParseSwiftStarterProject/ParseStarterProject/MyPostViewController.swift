@@ -28,6 +28,10 @@ class MyPostViewController: UIViewController, UITableViewDataSource, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        var monitor = InternetStatusDetector.sharedInstance
+        monitor.startMonitoring(errorMessage: "The internet is not avaialble")
+
+        
         // Location Manager
         self.manager = OneShotLocationManager()
         self.currentUser = PFUser.currentUser()
@@ -149,7 +153,7 @@ class MyPostViewController: UIViewController, UITableViewDataSource, UITableView
             println("location = \(loc.description), latitide = \(loc.coordinate.latitude)")
         } else if let err = error {
             println(err.localizedDescription)
-            var alert = UIAlertView(title: "Notice", message: "GPS Service cannot be detected", delegate: nil, cancelButtonTitle: "OK")
+            var alert = UIAlertView(title: "Notice", message: "Sorry, location service cannot be detected. Please turn on the GPS service to make a post", delegate: nil, cancelButtonTitle: "OK")
             alert.show()
         }
         
@@ -214,4 +218,6 @@ class MyPostViewController: UIViewController, UITableViewDataSource, UITableView
             destViewController.post = self.posts[self.tableView.indexPathForSelectedRow()!.row]
         }
     }
+    
+  
 }

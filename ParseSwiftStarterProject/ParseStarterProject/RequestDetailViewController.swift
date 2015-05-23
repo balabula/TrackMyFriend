@@ -28,6 +28,10 @@ class RequestDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        var monitor = InternetStatusDetector.sharedInstance
+        monitor.startMonitoring(errorMessage: "The internet is not avaialble")
+
+        
         self.currentUser = PFUser.currentUser()!
         self.spinnerHelper = SpinnerHelper(parentViewController: self)
         
@@ -90,5 +94,5 @@ class RequestDetailViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
+  
 }

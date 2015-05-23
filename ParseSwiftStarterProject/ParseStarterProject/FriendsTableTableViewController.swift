@@ -9,7 +9,7 @@
 import UIKit
 import Parse
 
-class FriendsTableTableViewController: UITableViewController {
+class FriendsTableTableViewController: UITableViewController, UITabBarControllerDelegate {
     
     var friends = [PFUser]()
     var currentUser: PFUser?
@@ -21,7 +21,12 @@ class FriendsTableTableViewController: UITableViewController {
         super.viewDidLoad()
         currentUser = PFUser.currentUser()
         self.spinnerHelper = SpinnerHelper(parentViewController: self)
+        self.tabBarController!.delegate = self
+        
+        var monitor = InternetStatusDetector.sharedInstance
+        monitor.startMonitoring(errorMessage: "The internet is not avaialble")
 
+        
         println("current user = \(currentUser)")
         
         retrieveFriendRecords()
@@ -34,8 +39,8 @@ class FriendsTableTableViewController: UITableViewController {
     
     private func retrieveFriendRecords(){
         println("retrieve Records")
-        self.spinnerHelper!.showModalIndicatorView()
-
+//        self.spinnerHelper!.showModalIndicatorView()
+        
         var query = PFQuery(className: "Friends", predicate: NSPredicate(format: "destFriend = %@", self.currentUser!))
         println("srcFriend = \(self.currentUser!)")
         query.findObjectsInBackgroundWithBlock(completeFetchingFriendsList)
@@ -44,16 +49,18 @@ class FriendsTableTableViewController: UITableViewController {
     
     lazy var completeFetchingFriendsList: ([AnyObject]?, NSError?) -> Void = {
         [unowned self](objects: [AnyObject]?, error: NSError?) -> Void in
-
-        println("CompeleFetching Friend List")
+//        self.spinnerHelper!.removeIndicatorControllerFromView()
+//        println("CompeleFetching Friend List")
         if(error != nil){
             println("error = \(error)")
             var alert = UIAlertView(title: "Notice", message: "Cannot connect Internet Please check", delegate: nil, cancelButtonTitle: "OK")
             alert.show()
+            
         } else {
             // Fetching Data
             self.counter = objects!.count
             println("obj = \(objects)")
+            
             for obj in (objects! as! [PFObject]){
                 
                 // Fetch user data
@@ -68,18 +75,19 @@ class FriendsTableTableViewController: UITableViewController {
                     self.counter -= 1
                     if(self.counter == 0){
                         self.tableView.reloadData()
-                        self.spinnerHelper!.removeIndicatorControllerFromView()
+//                        self.spinnerHelper!.removeIndicatorControllerFromView()
                     }
                 })
             }
+            
         }
-    
+        
         
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-
+        
     }
     
     // MARK: - Table view data source
@@ -173,4 +181,11 @@ class FriendsTableTableViewController: UITableViewController {
         
     }
     
+    func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
+        if(tabBarController.tabBar.selectedItem!.title! == "Friends"){
+            self.friends.removeAll(keepCapacity: true)
+            retrieveFriendRecords()
+        }
+    }
+   
 }

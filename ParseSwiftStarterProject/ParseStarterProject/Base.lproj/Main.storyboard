@@ -319,10 +319,10 @@
             </objects>
             <point key="canvasLocation" x="959" y="969"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Tabbed Bar View Controller-->
         <scene sceneID="wu1-IK-tn9">
             <objects>
-                <tabBarController id="9iG-fx-ct8" sceneMemberID="viewController">
+                <tabBarController id="9iG-fx-ct8" customClass="TabbedBarViewController" customModule="TrackYourFriends" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="cWn-wU-gvK">
                         <barButtonItem key="rightBarButtonItem" title="Setting" id="34X-3V-Qah"/>
                     </navigationItem>

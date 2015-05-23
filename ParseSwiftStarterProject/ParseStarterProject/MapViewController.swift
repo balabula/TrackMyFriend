@@ -19,6 +19,11 @@ class MapViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        var monitor = InternetStatusDetector.sharedInstance
+        monitor.startMonitoring(errorMessage: "The internet is not avaialble")
+
+        
         self.spinnerHelper = SpinnerHelper(parentViewController: self)
         retrievePost()
         
@@ -80,6 +85,8 @@ class MapViewController: UIViewController {
                 
             }else{
                 // TODO: Alert
+                var alert = UIAlertView(title: "Notice", message: "Please check internet connection", delegate: nil, cancelButtonTitle: "OK")
+                alert.show()
             }
             
         })
@@ -123,5 +130,7 @@ class MapViewController: UIViewController {
         }
         
     }
+    
+   
     
 }

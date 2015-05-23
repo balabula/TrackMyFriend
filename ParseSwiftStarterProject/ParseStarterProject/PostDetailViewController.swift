@@ -21,6 +21,9 @@ class PostDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        var monitor = InternetStatusDetector.sharedInstance
+        monitor.startMonitoring(errorMessage: "The internet is not avaialble")
+
         
         //get the time, in this case the time an object was created.
         //format date
@@ -75,5 +78,5 @@ class PostDetailViewController: UIViewController {
     // Pass the selected object to the new view controller.
     }
     */
-    
+  
 }

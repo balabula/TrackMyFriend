@@ -25,6 +25,9 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
 
         self.spinnerHelper = SpinnerHelper(parentViewController: self)
         
+        var monitor = InternetStatusDetector.sharedInstance
+        monitor.startMonitoring(errorMessage: "The internet is not avaialble")
+
         txtPwd.secureTextEntry = true
         txtPwdRpt.secureTextEntry = true
     
@@ -148,6 +151,10 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
                 var alert = UIAlertView(title: "Notice", message: "Usename has already been taken", delegate: nil, cancelButtonTitle: "OK")
                 alert.show()
                 println("User name has already been registered")
+            }else if (error!.code == 100){
+                println("Time out")
+                var alert = UIAlertView(title: "Notice", message: "Connection Time out, please try it later", delegate: nil, cancelButtonTitle: "OK")
+                alert.show()
             }
             // Examine the error object and inform the user.
         }

@@ -23,6 +23,9 @@ class SendFriendRequestViewController: UIViewController, UITextViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        var monitor = InternetStatusDetector.sharedInstance
+        monitor.startMonitoring(errorMessage: "The internet is not avaialble")
+        
         spinnerHelper = SpinnerHelper(parentViewController: self)
         println("friendRequest = \(friendRequested)")
         // Do any additional setup after loading the view.
@@ -111,6 +114,6 @@ class SendFriendRequestViewController: UIViewController, UITextViewDelegate {
         
         return true
     }
-
+  
 
 }

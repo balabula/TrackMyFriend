@@ -14,6 +14,9 @@ class MyAccountTableTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        var monitor = InternetStatusDetector.sharedInstance
+        monitor.startMonitoring(errorMessage: "The internet is not avaialble")
+
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -112,6 +115,6 @@ class MyAccountTableTableViewController: UITableViewController {
         
     }
 
-    
+  
 
 }
