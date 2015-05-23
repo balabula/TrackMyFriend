@@ -57,10 +57,11 @@ class SearchFriendViewController: UIViewController, UITableViewDelegate, UITable
     
     private func searchFriend(name: String){
         
-        self.spinnerHelper!.showModalIndicatorView()
+
         println("Search Friend")
         if(name != self.currentUser!.username){     // The current user is not searched
             var query = PFUser.queryWithPredicate(NSPredicate(format: "%K == %@", "username", name))
+            self.spinnerHelper!.showModalIndicatorView()
             //            spinnerHelper!.showModalIndicatorView()
             // TODO: Check if already is your friends
             query?.getFirstObjectInBackgroundWithBlock(completionFetchUser)

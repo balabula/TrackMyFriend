@@ -59,7 +59,7 @@ class PostDetailViewController: UIViewController {
             if err == nil{
                 var latitude: Double = point!.valueForKey("latitude") as! Double
                 var longitude: Double = point!.valueForKey("longitude") as! Double
-                self.lblLocation.text = "Longitude: \(longitude), Latitude: \(latitude)"
+                self.lblLocation.text = "(\(longitude),  \(latitude))"
             }else{
                 // TODO: Alert
                 var alert = UIAlertView(title: "Notice", message: "Please check internet connection", delegate: nil, cancelButtonTitle: "OK")

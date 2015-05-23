@@ -17,20 +17,26 @@ class MyPostViewController: UIViewController, UITableViewDataSource, UITableView
     @IBOutlet weak var txtPost: UITextView!
     @IBOutlet weak var btnPost: UIButton!
     
+    private var netManager: AFHTTPRequestOperationManager?
+    private var network: AFNetworkReachabilityManager?
     var manager: OneShotLocationManager?
     var currentUser: PFUser?
     var location: CLLocationCoordinate2D?
     var posts = [PFObject]()
+    var hasWifi: Bool = true;
+    
     private var spinnerHelper: SpinnerHelper?
     //    let locationManager = CLLocationManager()
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        var monitor = InternetStatusDetector.sharedInstance
-        monitor.startMonitoring(errorMessage: "The internet is not avaialble")
-
+        
+        netManager = AFHTTPRequestOperationManager()
+        network = netManager!.reachabilityManager
+        
+        startMonitoring()
         
         // Location Manager
         self.manager = OneShotLocationManager()
@@ -75,7 +81,7 @@ class MyPostViewController: UIViewController, UITableViewDataSource, UITableView
     
     lazy var completeRetrivingObjectsClosure: ([AnyObject]?, NSError?) -> Void = {
         [unowned self](objs: [AnyObject]?, err: NSError?) -> Void in
-
+        
         println("retrieve Post = \(objs)")
         if(err == nil){
             for obj in objs! {
@@ -85,8 +91,8 @@ class MyPostViewController: UIViewController, UITableViewDataSource, UITableView
             // TODO: Add alert
             var alert = UIAlertView(title: "Notice", message: "Please check internet connection", delegate: nil, cancelButtonTitle: "OK")
             alert.show()
-
-        }   
+            
+        }
         println("post = \(self.posts)")
         
         // Refresh Table
@@ -97,7 +103,7 @@ class MyPostViewController: UIViewController, UITableViewDataSource, UITableView
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-
+        
     }
     
     
@@ -131,6 +137,7 @@ class MyPostViewController: UIViewController, UITableViewDataSource, UITableView
     }
     @IBAction func didClickPostButton(sender: AnyObject) {
         
+        println("hasWifi = \(self.hasWifi)")
         getCurrentLocation()
     }
     
@@ -167,23 +174,27 @@ class MyPostViewController: UIViewController, UITableViewDataSource, UITableView
     
     private func savePoint() -> PFObject{
         
-        self.spinnerHelper!.showModalIndicatorView()
-        var point: PFObject = PFObject(className: "Point")
-        point.setObject(self.location!.latitude, forKey: "latitude")
-        point.setObject(self.location!.longitude, forKey: "longitude")
-        var access = PFACL()
-        access.setPublicReadAccess(true)
-        access.setPublicWriteAccess(true)
-        point.ACL = access
-        
-        point.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
-            self.spinnerHelper!.removeIndicatorControllerFromView()
-            if(!success){
-                var alert = UIAlertView(title: "Notice", message: "Please check internet connection", delegate: nil, cancelButtonTitle: "OK")
-                alert.show()
-            }
+
+            self.spinnerHelper!.showModalIndicatorView()
+            var point: PFObject = PFObject(className: "Point")
+            point.setObject(self.location!.latitude, forKey: "latitude")
+            point.setObject(self.location!.longitude, forKey: "longitude")
+            var access = PFACL()
+            access.setPublicReadAccess(true)
+            access.setPublicWriteAccess(true)
+            point.ACL = access
+            
+            point.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
+                self.spinnerHelper!.removeIndicatorControllerFromView()
+                if(!success){
+                    var alert = UIAlertView(title: "Notice", message: "Please check internet connection", delegate: nil, cancelButtonTitle: "OK")
+                    alert.show()
+                }
+
+            
         }
         return point
+
     }
     
     private func savePost(point: PFObject){
@@ -205,7 +216,7 @@ class MyPostViewController: UIViewController, UITableViewDataSource, UITableView
                 self.tableView.reloadData()
             }
         }
-
+        
         
     }
     
@@ -213,11 +224,35 @@ class MyPostViewController: UIViewController, UITableViewDataSource, UITableView
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        
         if(segue.identifier == "segue"){
             var destViewController: PostDetailViewController = segue.destinationViewController as! PostDetailViewController
             destViewController.post = self.posts[self.tableView.indexPathForSelectedRow()!.row]
+            
         }
     }
     
-  
+    func startMonitoring(){
+        // Check the ReacherAbility
+        self.network!.setReachabilityStatusChangeBlock(
+            {
+                println("Detecting, 0 = \($0)")
+                switch $0{
+                case AFNetworkReachabilityStatus.NotReachable:
+                    var alert = UIAlertView(title: "Warning", message: "Please check Internet Connection", delegate: nil, cancelButtonTitle: "OK")
+                    
+                    alert.show()
+                    self.hasWifi = false
+
+
+                default:
+                    println("has internet")
+                    self.hasWifi = true
+                }
+            }
+        )
+        network!.startMonitoring()
+        
+    }
+    
 }
