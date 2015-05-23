@@ -147,7 +147,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
                 var alert = UIAlertView(title: "Notice", message: "Invalid Email Address", delegate: nil, cancelButtonTitle: "OK")
                 alert.show()
                 println("Invalid Email Address")
-            }else if(error!.code == 292){
+            }else if(error!.code == 202){
                 var alert = UIAlertView(title: "Notice", message: "Usename has already been taken", delegate: nil, cancelButtonTitle: "OK")
                 alert.show()
                 println("User name has already been registered")
