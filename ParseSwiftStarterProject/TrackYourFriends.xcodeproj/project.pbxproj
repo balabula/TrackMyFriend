@@ -166,8 +166,6 @@
 			isa = PBXGroup;
 			children = (
 				8EEA0C661B1020D60091EDD6 /* Utility */,
-				8EBC1A411B0EAB8900CFF053 /* LocationManager */,
-				8EBC1A3E1B0DBFA000CFF053 /* EntityClass */,
 				8EF787A11B0C52DE007320DA /* AFNetworking */,
 				81BA814A1A49DA1800E65899 /* AppDelegate.swift */,
 				81BA81511A49DA1800E65899 /* Images.xcassets */,
@@ -224,26 +222,12 @@
 			name = "System Frameworks";
 			sourceTree = "<group>";
 		};
-		8EBC1A3E1B0DBFA000CFF053 /* EntityClass */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = EntityClass;
-			sourceTree = "<group>";
-		};
-		8EBC1A411B0EAB8900CFF053 /* LocationManager */ = {
-			isa = PBXGroup;
-			children = (
-				8EBC1A3F1B0EAB8500CFF053 /* OneShotLocationManager.swift */,
-			);
-			name = LocationManager;
-			sourceTree = "<group>";
-		};
 		8EEA0C661B1020D60091EDD6 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
 				8EEA0C641B1013E00091EDD6 /* SpinnerHelper.swift */,
 				8EEA0C691B1033C20091EDD6 /* InternetStatusDetector.swift */,
+				8EBC1A3F1B0EAB8500CFF053 /* OneShotLocationManager.swift */,
 			);
 			name = Utility;
 			sourceTree = "<group>";

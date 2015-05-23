@@ -40,4 +40,5 @@ class InternetStatusDetector{
         network.startMonitoring()
 
     }
-}
+    
+   }

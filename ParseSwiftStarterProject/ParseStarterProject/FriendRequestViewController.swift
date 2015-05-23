@@ -23,7 +23,7 @@ class FriendRequestViewController: UITableViewController {
         var monitor = InternetStatusDetector.sharedInstance
         monitor.startMonitoring(errorMessage: "The internet is not avaialble")
 
-        
+
         self.currentUser = PFUser.currentUser()
         self.spinnerHelper = SpinnerHelper(parentViewController: self)
         
