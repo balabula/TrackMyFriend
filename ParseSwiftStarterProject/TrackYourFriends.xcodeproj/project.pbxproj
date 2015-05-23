@@ -31,6 +31,7 @@
 		8E4A0AE31B0B0166008E249B /* SearchFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4A0AE21B0B0166008E249B /* SearchFriendViewController.swift */; };
 		8EBC1A401B0EAB8500CFF053 /* OneShotLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBC1A3F1B0EAB8500CFF053 /* OneShotLocationManager.swift */; };
 		8EBC1A451B0EE1D200CFF053 /* PostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBC1A441B0EE1D200CFF053 /* PostDetailViewController.swift */; };
+		8EEA0C651B1013E00091EDD6 /* SpinnerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EEA0C641B1013E00091EDD6 /* SpinnerHelper.swift */; };
 		8EF7878A1B0C5242007320DA /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EF787671B0C5242007320DA /* AFHTTPRequestOperation.m */; };
 		8EF7878B1B0C5242007320DA /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EF787691B0C5242007320DA /* AFHTTPRequestOperationManager.m */; };
 		8EF7878C1B0C5242007320DA /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EF7876B1B0C5242007320DA /* AFHTTPSessionManager.m */; };
@@ -80,6 +81,7 @@
 		8E4A0AE21B0B0166008E249B /* SearchFriendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchFriendViewController.swift; sourceTree = "<group>"; };
 		8EBC1A3F1B0EAB8500CFF053 /* OneShotLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OneShotLocationManager.swift; sourceTree = "<group>"; };
 		8EBC1A441B0EE1D200CFF053 /* PostDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailViewController.swift; sourceTree = "<group>"; };
+		8EEA0C641B1013E00091EDD6 /* SpinnerHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpinnerHelper.swift; sourceTree = "<group>"; };
 		8EF787661B0C5242007320DA /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
 		8EF787671B0C5242007320DA /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
 		8EF787681B0C5242007320DA /* AFHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperationManager.h; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 				8E4A0AE01B0AFC3F008E249B /* MyAccountTableTableViewController.swift */,
 				8E4A0AA11B0AE363008E249B /* mydatabase.xcdatamodeld */,
 				81BA814E1A49DA1800E65899 /* Main.storyboard */,
+				8EEA0C641B1013E00091EDD6 /* SpinnerHelper.swift */,
 			);
 			name = TrackYourFriends;
 			path = ParseStarterProject;
@@ -377,6 +380,7 @@
 				8EF7878D1B0C5242007320DA /* AFNetworkReachabilityManager.m in Sources */,
 				8EF787971B0C5242007320DA /* UIImageView+AFNetworking.m in Sources */,
 				8EF787981B0C5242007320DA /* UIProgressView+AFNetworking.m in Sources */,
+				8EEA0C651B1013E00091EDD6 /* SpinnerHelper.swift in Sources */,
 				8EF787911B0C5242007320DA /* AFURLResponseSerialization.m in Sources */,
 				8EF787991B0C5242007320DA /* UIRefreshControl+AFNetworking.m in Sources */,
 				8EF787901B0C5242007320DA /* AFURLRequestSerialization.m in Sources */,

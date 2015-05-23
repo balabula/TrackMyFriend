@@ -20,6 +20,7 @@ class RequestDetailViewController: UIViewController {
     @IBOutlet weak var lblUserName: UILabel!
     @IBOutlet weak var lblMessage: UILabel!
     
+    private var spinnerHelper: SpinnerHelper?
     var requestFriend: PFObject?
     var sourceFriend: PFObject?
     var currentUser: PFUser?
@@ -28,6 +29,7 @@ class RequestDetailViewController: UIViewController {
         super.viewDidLoad()
 
         self.currentUser = PFUser.currentUser()!
+        self.spinnerHelper = SpinnerHelper(parentViewController: self)
         
         println("requestFriend = \(requestFriend) sourceFriend = \(sourceFriend)")
         // Do any additional setup after loading the view.
@@ -73,7 +75,7 @@ class RequestDetailViewController: UIViewController {
         friendRecord2.saveInBackground()
         
         // Tell the user
-        var alert = UIAlertView(title: "Notice", message: "You have accept the friend request", delegate: nil, cancelButtonTitle: "OK")
+        var alert = UIAlertView(title: "Notice", message: "You have accepted the friend request", delegate: nil, cancelButtonTitle: "OK")
         alert.show()
         
         self.navigationController?.popToRootViewControllerAnimated(true)

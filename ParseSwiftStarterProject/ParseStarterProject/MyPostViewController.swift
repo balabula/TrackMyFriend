@@ -21,6 +21,7 @@ class MyPostViewController: UIViewController, UITableViewDataSource, UITableView
     var currentUser: PFUser?
     var location: CLLocationCoordinate2D?
     var posts = [PFObject]()
+    private var spinnerHelper: SpinnerHelper?
     //    let locationManager = CLLocationManager()
 
     
@@ -38,7 +39,7 @@ class MyPostViewController: UIViewController, UITableViewDataSource, UITableView
         self.txtPost.layer.borderWidth = 1.0
         self.txtPost.layer.borderColor = UIColor.grayColor().CGColor
         
-        
+        self.spinnerHelper = SpinnerHelper(parentViewController: self)
         // Retrieving My Post Record
         retrieveMyPostRecords()
         
@@ -62,6 +63,7 @@ class MyPostViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     private func retrieveMyPostRecords(){
+        self.spinnerHelper!.showModalIndicatorView()
         var query = PFQuery(className: "Post", predicate: NSPredicate(format: "user = %@", self.currentUser!))
         query.findObjectsInBackgroundWithBlock(completeRetrivingObjectsClosure)
         
@@ -77,10 +79,14 @@ class MyPostViewController: UIViewController, UITableViewDataSource, UITableView
             }
         }else{
             // TODO: Add alert
-        }
+            var alert = UIAlertView(title: "Notice", message: "Please check internet connection", delegate: nil, cancelButtonTitle: "OK")
+            alert.show()
+
+        }   
         println("post = \(self.posts)")
         
         // Refresh Table
+        self.spinnerHelper!.removeIndicatorControllerFromView()
         self.tableView.reloadData()
         
     }
@@ -156,6 +162,8 @@ class MyPostViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     private func savePoint() -> PFObject{
+        
+        self.spinnerHelper!.showModalIndicatorView()
         var point: PFObject = PFObject(className: "Point")
         point.setObject(self.location!.latitude, forKey: "latitude")
         point.setObject(self.location!.longitude, forKey: "longitude")
@@ -164,7 +172,13 @@ class MyPostViewController: UIViewController, UITableViewDataSource, UITableView
         access.setPublicWriteAccess(true)
         point.ACL = access
         
-        point.saveInBackground()
+        point.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
+            self.spinnerHelper!.removeIndicatorControllerFromView()
+            if(!success){
+                var alert = UIAlertView(title: "Notice", message: "Please check internet connection", delegate: nil, cancelButtonTitle: "OK")
+                alert.show()
+            }
+        }
         return point
     }
     

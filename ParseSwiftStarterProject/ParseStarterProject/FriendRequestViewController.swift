@@ -11,16 +11,18 @@ import Parse
 
 class FriendRequestViewController: UITableViewController {
 
-    var friendRequest: [PFObject] = [PFObject]()
-    var sourceFriend: [PFObject] = [PFObject]()
-    var currentUser: PFUser?
-    var counter = 0
+    private var friendRequest: [PFObject] = [PFObject]()
+    private var sourceFriend: [PFObject] = [PFObject]()
+    private var currentUser: PFUser?
+    private var counter = 0
+    private var spinnerHelper: SpinnerHelper?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.currentUser = PFUser.currentUser()
-        
+        self.spinnerHelper = SpinnerHelper(parentViewController: self)
+            
         // Do any additional setup after loading the view..
         retrieveFriendRequest()
     }
@@ -29,7 +31,8 @@ class FriendRequestViewController: UITableViewController {
         
         var query = PFQuery(className: "FriendRequest", predicate: NSPredicate(format: "destUser = %@ && checked = %@", currentUser!, false))
         
-
+        self.spinnerHelper!.showModalIndicatorView()
+        
         query.findObjectsInBackgroundWithBlock({ (objs:[AnyObject]?, error: NSError?) -> Void in
             if(error != nil){
                 println("error = \(error)")
@@ -64,6 +67,7 @@ class FriendRequestViewController: UITableViewController {
         self.counter -= 1
         
         if(self.counter == 0){
+            self.spinnerHelper!.removeIndicatorControllerFromView()
             self.tableView.reloadData()
         }
     }

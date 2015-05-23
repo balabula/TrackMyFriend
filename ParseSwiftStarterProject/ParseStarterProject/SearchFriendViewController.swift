@@ -14,6 +14,7 @@ class SearchFriendViewController: UIViewController, UITableViewDelegate, UITable
     
     private var currentUser: PFUser?
     private var friendFound: PFUser?
+    private var spinnerHelper : SpinnerHelper?
     
     @IBOutlet weak var searchBar: UISearchBar!
 
@@ -24,7 +25,8 @@ class SearchFriendViewController: UIViewController, UITableViewDelegate, UITable
         self.tableView.dataSource = self
         self.searchBar.delegate = self
         // Do any additional setup after loading the view.
-
+        spinnerHelper = SpinnerHelper(parentViewController: self)
+        
         currentUser = PFUser.currentUser()
         println("Current user = \(currentUser)")
     }
@@ -48,10 +50,11 @@ class SearchFriendViewController: UIViewController, UITableViewDelegate, UITable
    
     
     private func searchFriend(name: String){
+
         println("Search Friend")
         if(name != self.currentUser!.username){     // The current user is not searched
             var query = PFUser.queryWithPredicate(NSPredicate(format: "%K == %@", "username", name))
-            
+//            spinnerHelper!.showModalIndicatorView()
             // TODO: Check if already is your friends
             query?.getFirstObjectInBackgroundWithBlock(completionFetchUser)
         }
@@ -60,6 +63,7 @@ class SearchFriendViewController: UIViewController, UITableViewDelegate, UITable
     lazy var completionFetchUser: (PFObject?, NSError?) -> Void = {
        [unowned self] (user: PFObject?, error: NSError?) in
        
+//        self.spinnerHelper!.removeIndicatorControllerFromView()
         if let err = error {
             println("error = \(error)")
         } else {
@@ -68,6 +72,7 @@ class SearchFriendViewController: UIViewController, UITableViewDelegate, UITable
 
             // Update Table View
             self.tableView.reloadData()
+
         }
         
     }

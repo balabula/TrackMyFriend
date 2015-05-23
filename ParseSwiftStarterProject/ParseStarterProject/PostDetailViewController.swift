@@ -16,6 +16,8 @@ class PostDetailViewController: UIViewController {
     @IBOutlet weak var lblTime: UILabel!
     @IBOutlet weak var lblLocation: UILabel!
     
+    private var spinnerHelper: SpinnerHelper?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -30,6 +32,8 @@ class PostDetailViewController: UIViewController {
         
         lblPost.text = post!.valueForKey("content") as? String
         
+        self.spinnerHelper = SpinnerHelper(parentViewController: self)
+        
         getGeoPointFromPost()
         //        var latitude: Double = point.valueForKey("latitude") as! Double
         //        var longitude: Double = point.valueForKey("longitude") as! Double
@@ -43,7 +47,7 @@ class PostDetailViewController: UIViewController {
     }
     
     private func getGeoPointFromPost(){
-        
+        self.spinnerHelper!.showModalIndicatorView()
         var args = (post!.valueForKey("point") as! PFObject).valueForKey("objectId") as! String
         var query = PFQuery(className: "Point", predicate: NSPredicate(format: "objectId = %@", args))
         
@@ -55,7 +59,10 @@ class PostDetailViewController: UIViewController {
                 self.lblLocation.text = "Longitude: \(longitude), Latitude: \(latitude)"
             }else{
                 // TODO: Alert
+                var alert = UIAlertView(title: "Notice", message: "Please check internet connection", delegate: nil, cancelButtonTitle: "OK")
+                alert.show()
             }
+            self.spinnerHelper!.removeIndicatorControllerFromView()
             
         })
     }

@@ -14,13 +14,16 @@ class FriendsTableTableViewController: UITableViewController {
     var friends = [PFUser]()
     var currentUser: PFUser?
     
+    var spinnerHelper : SpinnerHelper?
     var counter = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         currentUser = PFUser.currentUser()
+        self.spinnerHelper = SpinnerHelper(parentViewController: self)
 
         println("current user = \(currentUser)")
+        
         retrieveFriendRecords()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -31,6 +34,8 @@ class FriendsTableTableViewController: UITableViewController {
     
     private func retrieveFriendRecords(){
         println("retrieve Records")
+        self.spinnerHelper!.showModalIndicatorView()
+
         var query = PFQuery(className: "Friends", predicate: NSPredicate(format: "destFriend = %@", self.currentUser!))
         println("srcFriend = \(self.currentUser!)")
         query.findObjectsInBackgroundWithBlock(completeFetchingFriendsList)
@@ -63,6 +68,7 @@ class FriendsTableTableViewController: UITableViewController {
                     self.counter -= 1
                     if(self.counter == 0){
                         self.tableView.reloadData()
+                        self.spinnerHelper!.removeIndicatorControllerFromView()
                     }
                 })
             }

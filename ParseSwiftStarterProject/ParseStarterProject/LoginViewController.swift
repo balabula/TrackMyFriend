@@ -13,6 +13,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var txtPassword: UITextField!
     @IBOutlet weak var txtUsername: UITextField!
     
+    private var spinnerHelper: SpinnerHelper?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -20,6 +22,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         self.txtPassword.delegate = self
         self.txtUsername.delegate = self
         self.txtPassword.secureTextEntry = true
+        
+        self.spinnerHelper = SpinnerHelper(parentViewController: self)
         // Do any additional setup after loading the view, typically from a nib.
 //        let user = PFUser()
 //        user.username = "my name"
@@ -60,10 +64,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func unwindByCancelButton(segue: UIStoryboardSegue) {
         println("Press Cancel Button")
+        clearUI()
     }
     
     @IBAction func unwindByRegisterButton(segue: UIStoryboardSegue) {
         println("Press Register Button")
+        clearUI()
     }
     
     @IBAction func unwindByLoggingOut(segue: UIStoryboardSegue) {
@@ -80,6 +86,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func didClickLoginButton(sender: AnyObject) {
         println("Click Login Button")
+        self.spinnerHelper!.showModalIndicatorView()
         checkCredential(name: self.txtUsername.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()), pwd: self.txtPassword.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()))
 
     }
@@ -99,6 +106,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     lazy var loginCompletionBlock: (PFUser?, NSError?) -> Void = {
         [unowned self] (user: PFUser?, error: NSError?) -> Void in
             println("user = \(user), error = \(error)")
+
+        self.spinnerHelper!.removeIndicatorControllerFromView()
         
         if let err = error {
             println("Wrong Password")

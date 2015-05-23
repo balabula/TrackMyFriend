@@ -14,10 +14,12 @@ class MapViewController: UIViewController {
     
     var counter = 0
     var selectFriend: PFUser?
+    private var spinnerHelper: SpinnerHelper?
     
     @IBOutlet weak var mapView: MKMapView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.spinnerHelper = SpinnerHelper(parentViewController: self)
         retrievePost()
         
         //        self.mapView.addAnnotation(annotation)
@@ -25,6 +27,7 @@ class MapViewController: UIViewController {
     }
     
     private func retrievePost(){
+        self.spinnerHelper!.showModalIndicatorView()
         var query = PFQuery(className: "Post", predicate: NSPredicate(format: "user = %@", self.selectFriend!))
         query.findObjectsInBackgroundWithBlock(completeRetrivingObjectsClosure)
         
@@ -100,15 +103,25 @@ class MapViewController: UIViewController {
     lazy var completeRetrivingObjectsClosure: ([AnyObject]?, NSError?) -> Void = {
         [unowned self](objs: [AnyObject]?, err: NSError?) -> Void in
         
+        self.spinnerHelper!.removeIndicatorControllerFromView()
         println("retrieve Post = \(objs)")
         if(err == nil){
-            for obj in objs! {
-                self.counter += 1
-                self.showPostOnMap(self.counter, post: obj as! PFObject)
+            if objs!.count == 0{
+                var alert = UIAlertView(title: "Notice", message: "Your friend hasn't posted anything yet.", delegate: nil, cancelButtonTitle: "OK")
+                alert.show()
+            }else{
+                for obj in objs! {
+                    self.counter += 1
+                    self.showPostOnMap(self.counter, post: obj as! PFObject)
+                }
             }
+            
         }else{
             // TODO: Add alert
+            var alert = UIAlertView(title: "Notice", message: "Please check internet connection", delegate: nil, cancelButtonTitle: "OK")
+            alert.show()
         }
+        
     }
     
 }

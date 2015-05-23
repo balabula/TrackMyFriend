@@ -15,6 +15,7 @@ class SendFriendRequestViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var lblName: UILabel!
     @IBOutlet weak var lblEmail: UILabel!
     @IBOutlet weak var txtMessage: UITextView!
+    private var spinnerHelper: SpinnerHelper?
     
     var friendRequested: PFUser?
     var currentUser: PFUser?
@@ -22,7 +23,7 @@ class SendFriendRequestViewController: UIViewController, UITextViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        spinnerHelper = SpinnerHelper(parentViewController: self)
         println("friendRequest = \(friendRequested)")
         // Do any additional setup after loading the view.
         self.currentUser = PFUser.currentUser()
@@ -45,7 +46,8 @@ class SendFriendRequestViewController: UIViewController, UITextViewDelegate {
     
     private func sendMessage(#message: String, to: PFUser){
         
-        
+        self.spinnerHelper!.showModalIndicatorView()
+
         var friendRequest = PFObject(className: "FriendRequest")
         println("Message Saved: \(message)")
         
@@ -54,6 +56,7 @@ class SendFriendRequestViewController: UIViewController, UITextViewDelegate {
             
             // TODO: Dismiss Spinner
             
+            self.spinnerHelper!.removeIndicatorControllerFromView()
             if(err == nil){
                 if(objs?.count == 0){
 
