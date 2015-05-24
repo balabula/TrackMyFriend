@@ -15,12 +15,19 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 
     private var spinnerHelper: SpinnerHelper?
     
+    private var flag = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         var monitor = InternetStatusDetector.sharedInstance
         monitor.startMonitoring(errorMessage: "The internet is not avaialble")
         
+        if flag {
+            // Clear cache
+            clearCache()
+            flag = false
+        }
         
         println("Started")
         self.txtPassword.delegate = self

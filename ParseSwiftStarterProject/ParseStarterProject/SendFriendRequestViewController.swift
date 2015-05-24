@@ -36,6 +36,9 @@ class SendFriendRequestViewController: UIViewController, UITextViewDelegate {
         lblName.text = self.friendRequested?.username
         lblEmail.text = self.friendRequested?.email
         
+        // Read from cache
+        txtMessage.text = readFromCache()
+        
         self.txtMessage.layer.borderWidth = 1.0
         self.txtMessage.layer.borderColor = UIColor.grayColor().CGColor
     }
@@ -115,5 +118,20 @@ class SendFriendRequestViewController: UIViewController, UITextViewDelegate {
         return true
     }
   
+    // TODO
+    override func didMoveToParentViewController(parent: UIViewController?) {
+        if(self.txtMessage != nil){
+                    println("caching data: parent Controller = \(parent?.title)")
+            // Add into Core Data with current user, destination user and message
+            
+        }
+
+    }
+    
+    // TODO:
+    private func readFromCache() -> String{
+        return ""
+    }
+    
 
 }

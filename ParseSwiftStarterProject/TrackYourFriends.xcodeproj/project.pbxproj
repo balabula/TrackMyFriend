@@ -180,11 +180,11 @@
 				8EF787A61B0D8F6C007320DA /* RequestDetailViewController.swift */,
 				8EBC1A441B0EE1D200CFF053 /* PostDetailViewController.swift */,
 				8E4A0ADA1B0AE60A008E249B /* MapViewController.swift */,
-				8E4A0AA11B0AE363008E249B /* mydatabase.xcdatamodeld */,
 				8E31800A1B117A94008F34AB /* TabBarViewController.swift */,
 				8E4A0AD61B0AE58F008E249B /* FriendsTableTableViewController.swift */,
 				8E4A0AD81B0AE5D4008E249B /* MyPostViewController.swift */,
 				8E4A0AE01B0AFC3F008E249B /* MyAccountTableTableViewController.swift */,
+				8E4A0AA11B0AE363008E249B /* mydatabase.xcdatamodeld */,
 				81BA814E1A49DA1800E65899 /* Main.storyboard */,
 			);
 			name = TrackYourFriends;
