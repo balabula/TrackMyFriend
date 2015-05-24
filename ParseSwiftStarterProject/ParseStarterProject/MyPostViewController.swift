@@ -17,11 +17,11 @@ class MyPostViewController: UIViewController, UITableViewDataSource, UITableView
     @IBOutlet weak var txtPost: UITextView!
     @IBOutlet weak var btnPost: UIButton!
     
-    var manager: OneShotLocationManager?
-    var currentUser: PFUser?
-    var location: CLLocationCoordinate2D?
+    private var manager: OneShotLocationManager?
+    private var currentUser: PFUser?
+    private var location: CLLocationCoordinate2D?
     var posts = [PFObject]()
-    var hasWifi: Bool = true
+//    var hasWifi: Bool = true
     
     private var spinnerHelper: SpinnerHelper?
     //    let locationManager = CLLocationManager()
@@ -30,8 +30,8 @@ class MyPostViewController: UIViewController, UITableViewDataSource, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        var network: InternetStatusDetector = InternetStatusDetector.sharedInstance
-        network.startMonitoring(statusBlock: statusClosure)
+//        var network: InternetStatusDetector = InternetStatusDetector.sharedInstance
+//        network.startMonitoring(statusBlock: statusClosure)
         
         // Location Manager
         self.manager = OneShotLocationManager()
@@ -46,7 +46,10 @@ class MyPostViewController: UIViewController, UITableViewDataSource, UITableView
         
         self.spinnerHelper = SpinnerHelper(parentViewController: self)
         // Retrieving My Post Record
-        retrieveMyPostRecords()
+        
+        if (self.tabBarController as! TabBarViewController).hasInternet{
+            retrieveMyPostRecords()
+        }
         
         //        // Ask for Authorisation from the User.
         //        self.locationManager.requestAlwaysAuthorization()
@@ -67,10 +70,12 @@ class MyPostViewController: UIViewController, UITableViewDataSource, UITableView
         
     }
     
-    private func retrieveMyPostRecords(){
+     func retrieveMyPostRecords(){
+        if(self.tableView != nil){
         self.spinnerHelper!.showModalIndicatorView()
         var query = PFQuery(className: "Post", predicate: NSPredicate(format: "user = %@", self.currentUser!))
         query.findObjectsInBackgroundWithBlock(completeRetrivingObjectsClosure)
+        }
         
     }
     
@@ -132,7 +137,7 @@ class MyPostViewController: UIViewController, UITableViewDataSource, UITableView
     }
     @IBAction func didClickPostButton(sender: AnyObject) {
         
-        println("hasWifi = \(self.hasWifi)")
+//        println("hasWifi = \(self.hasWifi)")
         getCurrentLocation()
     }
     
@@ -226,29 +231,29 @@ class MyPostViewController: UIViewController, UITableViewDataSource, UITableView
             
         }
     }
-    lazy var statusClosure: (AFNetworkReachabilityStatus) -> Void = {
-        [unowned self] in
-        println("Detecting, 0 = \($0)")
-        switch $0{
-        case AFNetworkReachabilityStatus.NotReachable:
-            var alert = UIAlertView(title: "Warning", message: "The internet is not avaliable", delegate: nil, cancelButtonTitle: "OK")
-            alert.show()
-            self.hasWifi = false
-            // Disable UI
-            self.enableTableByFlag()
-        default:
-            println("Friend table: has internet")
-            // Enable UI
-            self.hasWifi = false
-            self.enableTableByFlag()
-        }
-        
-    }
-    
-    func enableTableByFlag(){
-        if(self.tableView != nil){
-        println("tableview = \(self.tableView)")
-        self.tableView.userInteractionEnabled = self.hasWifi
-        }
-    }
+//    lazy var statusClosure: (AFNetworkReachabilityStatus) -> Void = {
+//        [unowned self] in
+//        println("Detecting, 0 = \($0)")
+//        switch $0{
+//        case AFNetworkReachabilityStatus.NotReachable:
+//            var alert = UIAlertView(title: "Warning", message: "The internet is not avaliable", delegate: nil, cancelButtonTitle: "OK")
+//            alert.show()
+//            self.hasWifi = false
+//            // Disable UI
+//            self.enableTableByFlag()
+//        default:
+//            println("Friend table: has internet")
+//            // Enable UI
+//            self.hasWifi = false
+//            self.enableTableByFlag()
+//        }
+//        
+//    }
+//    
+//    func enableTableByFlag(){
+//        if(self.tableView != nil){
+//        println("tableview = \(self.tableView)")
+//        self.tableView.userInteractionEnabled = self.hasWifi
+//        }
+//    }
 }

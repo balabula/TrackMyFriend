@@ -13,20 +13,20 @@ class FriendsTableTableViewController: UITableViewController {
     
     var friends = [PFUser]()
     var currentUser: PFUser?
-    var monitor: InternetStatusDetector?
+//    var monitor: InternetStatusDetector?
     var spinnerHelper : SpinnerHelper?
     var counter = 0
     
-    var hasInternet: Bool = true
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         currentUser = PFUser.currentUser()
         self.spinnerHelper = SpinnerHelper(parentViewController: self)
         
-        monitor = InternetStatusDetector.sharedInstance
+//        monitor = InternetStatusDetector.sharedInstance
         //        monitor.startMonitoring(errorMessage: "The internet is not avaialble")
-        monitor!.startMonitoring(statusBlock: statusClosure)
+//        monitor!.startMonitoring(statusBlock: statusClosure)
         
         
         println("current user = \(currentUser)")
@@ -39,26 +39,26 @@ class FriendsTableTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
     
-    lazy var statusClosure: (AFNetworkReachabilityStatus) -> Void = {
-        [unowned self] in
-        println("Detecting, 0 = \($0)")
-        switch $0{
-        case AFNetworkReachabilityStatus.NotReachable:
-            var alert = UIAlertView(title: "Warning", message: "The internet is not avaliable", delegate: nil, cancelButtonTitle: "OK")
-            alert.show()
-            self.hasInternet = false
-            // Disable UI
-
-            self.enableTableByFlag()
-        default:
-            println("Friend table: has internet")
-            self.hasInternet = true
-            // Enable UI
-self.enableTableByFlag()
-        }
-        
-    }
-    private func retrieveFriendRecords(){
+//    lazy var statusClosure: (AFNetworkReachabilityStatus) -> Void = {
+//        [unowned self] in
+//        println("Detecting, 0 = \($0)")
+//        switch $0{
+//        case AFNetworkReachabilityStatus.NotReachable:
+//            var alert = UIAlertView(title: "Warning", message: "The internet is not avaliable", delegate: nil, cancelButtonTitle: "OK")
+//            alert.show()
+//            self.hasInternet = false
+//            // Disable UI
+//
+//            self.enableTableByFlag()
+//        default:
+//            println("Friend table: has internet")
+//            self.hasInternet = true
+//            // Enable UI
+//self.enableTableByFlag()
+//        }
+//        
+//    }
+    func retrieveFriendRecords(){
         println("retrieve Records")
         //        self.spinnerHelper!.showModalIndicatorView()
         
@@ -203,28 +203,28 @@ self.enableTableByFlag()
         
     }
     
-    func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
-        
-
-        
-        if(tabBarController.tabBar.selectedItem!.title! == "Friends"){
-            println("friends tab bar selected, hasWIfi = \(self.hasInternet)")
-
-            self.friends.removeAll(keepCapacity: true)
-            retrieveFriendRecords()
-            self.enableTableByFlag()
-        } else if(tabBarController.tabBar.selectedItem!.title! == "My Moment"){
-
-            var postViewController: MyPostViewController = ((viewController as! UINavigationController).viewControllers.first) as! MyPostViewController
-            postViewController.enableTableByFlag()
-
-        }
-    }
-    
-    func enableTableByFlag(){
-        if (self.tableView != nil){
-                    self.tableView.userInteractionEnabled = self.hasInternet
-        }
-    }
-    
+//    func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
+//        
+//
+//        
+//        if(tabBarController.tabBar.selectedItem!.title! == "Friends"){
+//            println("friends tab bar selected, hasWIfi = \(self.hasInternet)")
+//
+//            self.friends.removeAll(keepCapacity: true)
+//            retrieveFriendRecords()
+//            self.enableTableByFlag()
+//        } else if(tabBarController.tabBar.selectedItem!.title! == "My Moment"){
+//
+//            var postViewController: MyPostViewController = ((viewController as! UINavigationController).viewControllers.first) as! MyPostViewController
+//            postViewController.enableTableByFlag()
+//
+//        }
+//    }
+//    
+//    func enableTableByFlag(){
+//        if (self.tableView != nil){
+//                    self.tableView.userInteractionEnabled = self.hasInternet
+//        }
+//    }
+//    
 }

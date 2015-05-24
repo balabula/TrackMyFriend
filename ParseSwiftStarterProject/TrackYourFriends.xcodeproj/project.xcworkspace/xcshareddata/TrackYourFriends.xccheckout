@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>7B28C4DE-22F0-4D69-8F2B-D361B060DF81</string>
 	<key>IDESourceControlProjectName</key>
-	<string>TrackYourFriends</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>197F074125BCF3B92142D9421953B3163A74296D</key>
 		<string>https://bitbucket.org/balabula/cos80020_assign11_custom_app.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>ParseSwiftStarterProject/TrackYourFriends.xcodeproj</string>
+	<string>ParseSwiftStarterProject/TrackYourFriends.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>197F074125BCF3B92142D9421953B3163A74296D</key>

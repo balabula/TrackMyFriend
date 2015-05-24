@@ -89,13 +89,8 @@ class MapViewController: UIViewController {
                 var alert = UIAlertView(title: "Notice", message: "Please check internet connection", delegate: nil, cancelButtonTitle: "OK")
                 alert.show()
             }
-            
         })
-        
-        
-        
     }
-    
     
     /*
     // MARK: - Navigation
@@ -106,8 +101,6 @@ class MapViewController: UIViewController {
     // Pass the selected object to the new view controller.
     }
     */
-    
-    
     lazy var completeRetrivingObjectsClosure: ([AnyObject]?, NSError?) -> Void = {
         [unowned self](objs: [AnyObject]?, err: NSError?) -> Void in
         
