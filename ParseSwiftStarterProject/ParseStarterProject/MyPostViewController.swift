@@ -17,13 +17,11 @@ class MyPostViewController: UIViewController, UITableViewDataSource, UITableView
     @IBOutlet weak var txtPost: UITextView!
     @IBOutlet weak var btnPost: UIButton!
     
-    private var netManager: AFHTTPRequestOperationManager?
-    private var network: AFNetworkReachabilityManager?
     var manager: OneShotLocationManager?
     var currentUser: PFUser?
     var location: CLLocationCoordinate2D?
     var posts = [PFObject]()
-    var hasWifi: Bool = true;
+    var hasWifi: Bool = true
     
     private var spinnerHelper: SpinnerHelper?
     //    let locationManager = CLLocationManager()
@@ -32,11 +30,8 @@ class MyPostViewController: UIViewController, UITableViewDataSource, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        netManager = AFHTTPRequestOperationManager()
-        network = netManager!.reachabilityManager
-        
-        startMonitoring()
+        var network: InternetStatusDetector = InternetStatusDetector.sharedInstance
+        network.startMonitoring(statusBlock: statusClosure)
         
         // Location Manager
         self.manager = OneShotLocationManager()
@@ -174,27 +169,27 @@ class MyPostViewController: UIViewController, UITableViewDataSource, UITableView
     
     private func savePoint() -> PFObject{
         
-
-            self.spinnerHelper!.showModalIndicatorView()
-            var point: PFObject = PFObject(className: "Point")
-            point.setObject(self.location!.latitude, forKey: "latitude")
-            point.setObject(self.location!.longitude, forKey: "longitude")
-            var access = PFACL()
-            access.setPublicReadAccess(true)
-            access.setPublicWriteAccess(true)
-            point.ACL = access
+        
+        self.spinnerHelper!.showModalIndicatorView()
+        var point: PFObject = PFObject(className: "Point")
+        point.setObject(self.location!.latitude, forKey: "latitude")
+        point.setObject(self.location!.longitude, forKey: "longitude")
+        var access = PFACL()
+        access.setPublicReadAccess(true)
+        access.setPublicWriteAccess(true)
+        point.ACL = access
+        
+        point.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
+            self.spinnerHelper!.removeIndicatorControllerFromView()
+            if(!success){
+                var alert = UIAlertView(title: "Notice", message: "Please check internet connection", delegate: nil, cancelButtonTitle: "OK")
+                alert.show()
+            }
             
-            point.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
-                self.spinnerHelper!.removeIndicatorControllerFromView()
-                if(!success){
-                    var alert = UIAlertView(title: "Notice", message: "Please check internet connection", delegate: nil, cancelButtonTitle: "OK")
-                    alert.show()
-                }
-
             
         }
         return point
-
+        
     }
     
     private func savePost(point: PFObject){
@@ -231,28 +226,29 @@ class MyPostViewController: UIViewController, UITableViewDataSource, UITableView
             
         }
     }
-    
-    func startMonitoring(){
-        // Check the ReacherAbility
-        self.network!.setReachabilityStatusChangeBlock(
-            {
-                println("Detecting, 0 = \($0)")
-                switch $0{
-                case AFNetworkReachabilityStatus.NotReachable:
-                    var alert = UIAlertView(title: "Warning", message: "Please check Internet Connection", delegate: nil, cancelButtonTitle: "OK")
-                    
-                    alert.show()
-                    self.hasWifi = false
-
-
-                default:
-                    println("has internet")
-                    self.hasWifi = true
-                }
-            }
-        )
-        network!.startMonitoring()
+    lazy var statusClosure: (AFNetworkReachabilityStatus) -> Void = {
+        [unowned self] in
+        println("Detecting, 0 = \($0)")
+        switch $0{
+        case AFNetworkReachabilityStatus.NotReachable:
+            var alert = UIAlertView(title: "Warning", message: "The internet is not avaliable", delegate: nil, cancelButtonTitle: "OK")
+            alert.show()
+            self.hasWifi = false
+            // Disable UI
+            self.enableTableByFlag()
+        default:
+            println("Friend table: has internet")
+            // Enable UI
+            self.hasWifi = false
+            self.enableTableByFlag()
+        }
         
     }
     
+    func enableTableByFlag(){
+        if(self.tableView != nil){
+        println("tableview = \(self.tableView)")
+        self.tableView.userInteractionEnabled = self.hasWifi
+        }
+    }
 }

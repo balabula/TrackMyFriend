@@ -39,27 +39,12 @@ class InternetStatusDetector{
         )
         network.startMonitoring()
 
+       
     }
     
-    
-    func startMonitoring(#errorMessage: String, inout hasWIFI: Bool){
-        // Check the ReacherAbility
-        self.network.setReachabilityStatusChangeBlock(
-            {
-                println("Detecting, 0 = \($0)")
-                switch $0{
-                case AFNetworkReachabilityStatus.NotReachable:
-                    var alert = UIAlertView(title: "Warning", message: errorMessage, delegate: nil, cancelButtonTitle: "OK")
-                    hasWIFI = false
-                    alert.show()
-                    println("Changing Status")
-                default:
-                    hasWIFI = true
-                    println("has internet")
-                }
-            }
-        )
-        network.startMonitoring()
-        
+    func startMonitoring(#statusBlock: (AFNetworkReachabilityStatus) -> Void){
+        self.network.setReachabilityStatusChangeBlock(statusBlock)
+        self.network.startMonitoring()
     }
+   
    }

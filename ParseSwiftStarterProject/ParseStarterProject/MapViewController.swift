@@ -14,6 +14,7 @@ class MapViewController: UIViewController {
     
     var counter = 0
     var selectFriend: PFUser?
+
     private var spinnerHelper: SpinnerHelper?
     
     @IBOutlet weak var mapView: MKMapView!

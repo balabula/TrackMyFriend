@@ -9,23 +9,25 @@
 import UIKit
 import Parse
 
-class FriendsTableTableViewController: UITableViewController, UITabBarControllerDelegate {
+class FriendsTableTableViewController: UITableViewController {
     
     var friends = [PFUser]()
     var currentUser: PFUser?
-    
+    var monitor: InternetStatusDetector?
     var spinnerHelper : SpinnerHelper?
     var counter = 0
+    
+    var hasInternet: Bool = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
         currentUser = PFUser.currentUser()
         self.spinnerHelper = SpinnerHelper(parentViewController: self)
-        self.tabBarController!.delegate = self
         
-        var monitor = InternetStatusDetector.sharedInstance
-        monitor.startMonitoring(errorMessage: "The internet is not avaialble")
-
+        monitor = InternetStatusDetector.sharedInstance
+        //        monitor.startMonitoring(errorMessage: "The internet is not avaialble")
+        monitor!.startMonitoring(statusBlock: statusClosure)
+        
         
         println("current user = \(currentUser)")
         
@@ -37,9 +39,28 @@ class FriendsTableTableViewController: UITableViewController, UITabBarController
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
     
+    lazy var statusClosure: (AFNetworkReachabilityStatus) -> Void = {
+        [unowned self] in
+        println("Detecting, 0 = \($0)")
+        switch $0{
+        case AFNetworkReachabilityStatus.NotReachable:
+            var alert = UIAlertView(title: "Warning", message: "The internet is not avaliable", delegate: nil, cancelButtonTitle: "OK")
+            alert.show()
+            self.hasInternet = false
+            // Disable UI
+
+            self.enableTableByFlag()
+        default:
+            println("Friend table: has internet")
+            self.hasInternet = true
+            // Enable UI
+self.enableTableByFlag()
+        }
+        
+    }
     private func retrieveFriendRecords(){
         println("retrieve Records")
-//        self.spinnerHelper!.showModalIndicatorView()
+        //        self.spinnerHelper!.showModalIndicatorView()
         
         var query = PFQuery(className: "Friends", predicate: NSPredicate(format: "destFriend = %@", self.currentUser!))
         println("srcFriend = \(self.currentUser!)")
@@ -49,8 +70,8 @@ class FriendsTableTableViewController: UITableViewController, UITabBarController
     
     lazy var completeFetchingFriendsList: ([AnyObject]?, NSError?) -> Void = {
         [unowned self](objects: [AnyObject]?, error: NSError?) -> Void in
-//        self.spinnerHelper!.removeIndicatorControllerFromView()
-//        println("CompeleFetching Friend List")
+        //        self.spinnerHelper!.removeIndicatorControllerFromView()
+        //        println("CompeleFetching Friend List")
         if(error != nil){
             println("error = \(error)")
             var alert = UIAlertView(title: "Notice", message: "Cannot connect Internet Please check", delegate: nil, cancelButtonTitle: "OK")
@@ -75,7 +96,7 @@ class FriendsTableTableViewController: UITableViewController, UITabBarController
                     self.counter -= 1
                     if(self.counter == 0){
                         self.tableView.reloadData()
-//                        self.spinnerHelper!.removeIndicatorControllerFromView()
+                        //                        self.spinnerHelper!.removeIndicatorControllerFromView()
                     }
                 })
             }
@@ -183,10 +204,27 @@ class FriendsTableTableViewController: UITableViewController, UITabBarController
     }
     
     func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
+        
+
+        
         if(tabBarController.tabBar.selectedItem!.title! == "Friends"){
+            println("friends tab bar selected, hasWIfi = \(self.hasInternet)")
+
             self.friends.removeAll(keepCapacity: true)
             retrieveFriendRecords()
+            self.enableTableByFlag()
+        } else if(tabBarController.tabBar.selectedItem!.title! == "My Moment"){
+
+            var postViewController: MyPostViewController = ((viewController as! UINavigationController).viewControllers.first) as! MyPostViewController
+            postViewController.enableTableByFlag()
+
         }
     }
-   
+    
+    func enableTableByFlag(){
+        if (self.tableView != nil){
+                    self.tableView.userInteractionEnabled = self.hasInternet
+        }
+    }
+    
 }
