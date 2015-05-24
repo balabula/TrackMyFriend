@@ -11,7 +11,7 @@ import CoreLocation
 import Parse
 
 // TODO: Add GPS Enable Detection
-class MyPostViewController: UIViewController, UITableViewDataSource, UITableViewDelegate{
+class MyPostViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextViewDelegate{
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var txtPost: UITextView!
@@ -21,7 +21,7 @@ class MyPostViewController: UIViewController, UITableViewDataSource, UITableView
     private var currentUser: PFUser?
     private var location: CLLocationCoordinate2D?
     var posts = [PFObject]()
-//    var hasWifi: Bool = true
+    //    var hasWifi: Bool = true
     
     private var spinnerHelper: SpinnerHelper?
     //    let locationManager = CLLocationManager()
@@ -30,8 +30,9 @@ class MyPostViewController: UIViewController, UITableViewDataSource, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        var network: InternetStatusDetector = InternetStatusDetector.sharedInstance
-//        network.startMonitoring(statusBlock: statusClosure)
+        self.txtPost.delegate = self
+        //        var network: InternetStatusDetector = InternetStatusDetector.sharedInstance
+        //        network.startMonitoring(statusBlock: statusClosure)
         
         // Location Manager
         self.manager = OneShotLocationManager()
@@ -70,11 +71,11 @@ class MyPostViewController: UIViewController, UITableViewDataSource, UITableView
         
     }
     
-     func retrieveMyPostRecords(){
+    func retrieveMyPostRecords(){
         if(self.tableView != nil){
-        self.spinnerHelper!.showModalIndicatorView()
-        var query = PFQuery(className: "Post", predicate: NSPredicate(format: "user = %@", self.currentUser!))
-        query.findObjectsInBackgroundWithBlock(completeRetrivingObjectsClosure)
+            self.spinnerHelper!.showModalIndicatorView()
+            var query = PFQuery(className: "Post", predicate: NSPredicate(format: "user = %@", self.currentUser!))
+            query.findObjectsInBackgroundWithBlock(completeRetrivingObjectsClosure)
         }
         
     }
@@ -137,7 +138,7 @@ class MyPostViewController: UIViewController, UITableViewDataSource, UITableView
     }
     @IBAction func didClickPostButton(sender: AnyObject) {
         
-//        println("hasWifi = \(self.hasWifi)")
+        //        println("hasWifi = \(self.hasWifi)")
         getCurrentLocation()
     }
     
@@ -231,29 +232,63 @@ class MyPostViewController: UIViewController, UITableViewDataSource, UITableView
             
         }
     }
-//    lazy var statusClosure: (AFNetworkReachabilityStatus) -> Void = {
-//        [unowned self] in
-//        println("Detecting, 0 = \($0)")
-//        switch $0{
-//        case AFNetworkReachabilityStatus.NotReachable:
-//            var alert = UIAlertView(title: "Warning", message: "The internet is not avaliable", delegate: nil, cancelButtonTitle: "OK")
-//            alert.show()
-//            self.hasWifi = false
-//            // Disable UI
-//            self.enableTableByFlag()
-//        default:
-//            println("Friend table: has internet")
-//            // Enable UI
-//            self.hasWifi = false
-//            self.enableTableByFlag()
-//        }
-//        
-//    }
-//    
-//    func enableTableByFlag(){
-//        if(self.tableView != nil){
-//        println("tableview = \(self.tableView)")
-//        self.tableView.userInteractionEnabled = self.hasWifi
-//        }
-//    }
+    
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+
+        if(range.length == 0){
+            if(text == "\n"){
+                textView.resignFirstResponder()
+                return false
+            }
+            
+        }
+        return true
+
+    }
+    
+
+    //    lazy var statusClosure: (AFNetworkReachabilityStatus) -> Void = {
+    //        [unowned self] in
+    //        println("Detecting, 0 = \($0)")
+    //        switch $0{
+    //        case AFNetworkReachabilityStatus.NotReachable:
+    //            var alert = UIAlertView(title: "Warning", message: "The internet is not avaliable", delegate: nil, cancelButtonTitle: "OK")
+    //            alert.show()
+    //            self.hasWifi = false
+    //            // Disable UI
+    //            self.enableTableByFlag()
+    //        default:
+    //            println("Friend table: has internet")
+    //            // Enable UI
+    //            self.hasWifi = false
+    //            self.enableTableByFlag()
+    //        }
+    //
+    //    }
+    //
+    //    func enableTableByFlag(){
+    //        if(self.tableView != nil){
+    //        println("tableview = \(self.tableView)")
+    //        self.tableView.userInteractionEnabled = self.hasWifi
+    //        }
+    //    }
+    
+    func textViewDidBeginEditing(textView: UITextView) {
+        animateViewMoving(true, moveValue: 100)
+    }
+    
+    func textViewDidEndEditing(textView: UITextView) {
+        animateViewMoving(false, moveValue: 100)
+    }
+    
+    
+    func animateViewMoving (up:Bool, moveValue :CGFloat){
+        var movementDuration:NSTimeInterval = 0.3
+        var movement:CGFloat = ( up ? -moveValue * 2 : moveValue * 2)
+        UIView.beginAnimations( "animateView", context: nil)
+        UIView.setAnimationBeginsFromCurrentState(true)
+        UIView.setAnimationDuration(movementDuration )
+        self.view.frame = CGRectOffset(self.view.frame, 0,  movement)
+        UIView.commitAnimations()
+    }
 }

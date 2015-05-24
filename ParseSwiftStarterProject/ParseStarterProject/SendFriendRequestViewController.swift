@@ -8,6 +8,7 @@
 
 import UIKit
 import Parse
+import CoreData
 
 class SendFriendRequestViewController: UIViewController, UITextViewDelegate {
     
@@ -17,11 +18,14 @@ class SendFriendRequestViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var txtMessage: UITextView!
     private var spinnerHelper: SpinnerHelper?
     
+    var context: NSManagedObjectContext?
     var friendRequested: PFUser?
     var currentUser: PFUser?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
         
         var monitor = InternetStatusDetector.sharedInstance
         monitor.startMonitoring(errorMessage: "The internet is not avaialble")
@@ -123,6 +127,12 @@ class SendFriendRequestViewController: UIViewController, UITextViewDelegate {
         if(self.txtMessage != nil){
                     println("caching data: parent Controller = \(parent?.title)")
             // Add into Core Data with current user, destination user and message
+            var entityDescription: NSEntityDescription = NSEntityDescription.entityForName("FriendRequest", inManagedObjectContext: self.context!)!
+            var newEntity = NSManagedObject(entity: entityDescription, insertIntoManagedObjectContext: self.context)
+            newEntity.setValue(self.currentUser!.objectId!, forKey: "userId")
+                        newEntity.setValue(self.txtMessage.text, forKey: "content")
+                        newEntity.setValue(self.friendRequested!.objectId!, forKey: "friendId")
+            self.context?.save(nil)
             
         }
 
@@ -130,6 +140,16 @@ class SendFriendRequestViewController: UIViewController, UITextViewDelegate {
     
     // TODO:
     private func readFromCache() -> String{
+        var request = NSFetchRequest(entityName: "FriendRequest")
+//        request.returnsObjectsAsFaults = false
+        request.predicate = NSPredicate(format: "userId = %@ && friendId = %@", self.currentUser!.objectId!, self.friendRequested!.objectId!)
+        
+        var results: NSArray = self.context!.executeFetchRequest(request, error: nil)!
+        
+        if results.count > 0 {
+            var result = results[0] as! NSManagedObject
+            return result.valueForKey("content") as! String
+        }
         return ""
     }
     

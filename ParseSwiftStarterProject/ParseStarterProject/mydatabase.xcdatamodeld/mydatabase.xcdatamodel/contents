@@ -3,8 +3,9 @@
     <entity name="FriendRequest" syncable="YES">
         <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="friendId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="userId" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="FriendRequest" positionX="-54" positionY="0" width="128" height="75"/>
+        <element name="FriendRequest" positionX="-54" positionY="0" width="128" height="90"/>
     </elements>
 </model>

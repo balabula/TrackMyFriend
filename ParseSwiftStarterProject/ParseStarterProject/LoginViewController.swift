@@ -6,6 +6,7 @@
 
 import UIKit
 import Parse
+import CoreData
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
     
@@ -14,11 +15,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var txtUsername: UITextField!
 
     private var spinnerHelper: SpinnerHelper?
-    
+    private var context: NSManagedObjectContext?
     private var flag = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
         
         var monitor = InternetStatusDetector.sharedInstance
         monitor.startMonitoring(errorMessage: "The internet is not avaialble")
@@ -138,5 +141,34 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
         
     }
+    
+    private func clearCache(){
+        var request: NSFetchRequest = NSFetchRequest(entityName: "FriendRequest")
+        var results: NSArray = self.context!.executeFetchRequest(request, error: nil)!
+        println("Clear cache: records = \(results.count)")
+        for result in results {
+            self.context?.deleteObject(result as! NSManagedObject)
+        }
+        
+    }
+    
+    // Shift the keyboard
+    func textFieldDidBeginEditing(textField: UITextField) {
+        animateViewMoving(true, moveValue: 100)
+    }
+    func textFieldDidEndEditing(textField: UITextField) {
+        animateViewMoving(false, moveValue: 100)
+    }
+    
+    func animateViewMoving (up:Bool, moveValue :CGFloat){
+        var movementDuration:NSTimeInterval = 0.3
+        var movement:CGFloat = ( up ? -moveValue : moveValue)
+        UIView.beginAnimations( "animateView", context: nil)
+        UIView.setAnimationBeginsFromCurrentState(true)
+        UIView.setAnimationDuration(movementDuration )
+        self.view.frame = CGRectOffset(self.view.frame, 0,  movement)
+        UIView.commitAnimations()
+    }
+    
 }
 
