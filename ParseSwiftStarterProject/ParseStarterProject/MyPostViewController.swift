@@ -21,6 +21,7 @@ class MyPostViewController: UIViewController, UITableViewDataSource, UITableView
     private var currentUser: PFUser?
     private var location: CLLocationCoordinate2D?
     var posts = [PFObject]()
+    var completionFlag = false
     //    var hasWifi: Bool = true
     
     private var spinnerHelper: SpinnerHelper?
@@ -72,7 +73,9 @@ class MyPostViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func retrieveMyPostRecords(){
+
         if(self.tableView != nil){
+                   completionFlag = false
             self.spinnerHelper!.showModalIndicatorView()
             var query = PFQuery(className: "Post", predicate: NSPredicate(format: "user = %@", self.currentUser!))
             query.findObjectsInBackgroundWithBlock(completeRetrivingObjectsClosure)
@@ -98,6 +101,7 @@ class MyPostViewController: UIViewController, UITableViewDataSource, UITableView
         
         // Refresh Table
         self.spinnerHelper!.removeIndicatorControllerFromView()
+                self.completionFlag = true
         self.tableView.reloadData()
         
     }
@@ -123,7 +127,7 @@ class MyPostViewController: UIViewController, UITableViewDataSource, UITableView
     }
     */
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.posts.count
+        return completionFlag ? self.posts.count : 0
     }
     
     func tableView(tableView: UITableView, sectionForSectionIndexTitle title: String, atIndex index: Int) -> Int {
@@ -131,6 +135,8 @@ class MyPostViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
+        
+
         var cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell
         cell.textLabel!.text = self.posts[indexPath.row].valueForKey("content") as?  String
         return cell
@@ -284,7 +290,7 @@ class MyPostViewController: UIViewController, UITableViewDataSource, UITableView
     
     func animateViewMoving (up:Bool, moveValue :CGFloat){
         var movementDuration:NSTimeInterval = 0.3
-        var movement:CGFloat = ( up ? -moveValue * 2 : moveValue * 2)
+        var movement:CGFloat = ( up ? -moveValue * 1.7 : moveValue * 1.7)
         UIView.beginAnimations( "animateView", context: nil)
         UIView.setAnimationBeginsFromCurrentState(true)
         UIView.setAnimationDuration(movementDuration )

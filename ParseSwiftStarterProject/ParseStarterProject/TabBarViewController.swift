@@ -53,14 +53,18 @@ class TabBarViewController: UITabBarController {
             //            println(self.viewControllers?.first)
             var friendController = (self.viewControllers?.first as! UINavigationController).viewControllers.first as! FriendsTableTableViewController
             if(self.hasInternet){
-                friendController.friends.removeAll(keepCapacity: true)
-                friendController.retrieveFriendRecords()
+                if !friendController.compFlag {
+                    friendController.friends.removeAll(keepCapacity: true)
+                    friendController.retrieveFriendRecords()
+                }
             }
         }else if(item.title! == "My Moment"){
             var myPostController = (self.viewControllers![1] as! UINavigationController).viewControllers.first as! MyPostViewController
-            if(self.hasInternet){
-                myPostController.posts.removeAll(keepCapacity: true)
-                myPostController.retrieveMyPostRecords()
+            if !myPostController.completionFlag {
+                if(self.hasInternet){
+                    myPostController.posts.removeAll(keepCapacity: true)
+                    myPostController.retrieveMyPostRecords()
+                }
             }
         }
     }

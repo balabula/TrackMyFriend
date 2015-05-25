@@ -34,7 +34,6 @@ class SendFriendRequestViewController: UIViewController, UITextViewDelegate {
         println("friendRequest = \(friendRequested)")
         // Do any additional setup after loading the view.
         self.currentUser = PFUser.currentUser()
-        self.txtMessage.delegate = self
         
         // Update User Interface
         lblName.text = self.friendRequested?.username
@@ -43,6 +42,7 @@ class SendFriendRequestViewController: UIViewController, UITextViewDelegate {
         // Read from cache
         txtMessage.text = readFromCache()
         
+        self.txtMessage.delegate = self
         self.txtMessage.layer.borderWidth = 1.0
         self.txtMessage.layer.borderColor = UIColor.grayColor().CGColor
     }
@@ -116,16 +116,12 @@ class SendFriendRequestViewController: UIViewController, UITextViewDelegate {
     }
     
     
-    func textViewShouldEndEditing(textView: UITextView) -> Bool {
-        self.txtMessage.endEditing(true)
-        
-        return true
-    }
+ 
   
     // TODO
     override func didMoveToParentViewController(parent: UIViewController?) {
-        if(self.txtMessage != nil){
-                    println("caching data: parent Controller = \(parent?.title)")
+        if(self.txtMessage != nil && self.txtMessage.text != ""){
+            println("caching data: parent Controller = \(parent?.title)")
             // Add into Core Data with current user, destination user and message
             var entityDescription: NSEntityDescription = NSEntityDescription.entityForName("FriendRequest", inManagedObjectContext: self.context!)!
             var newEntity = NSManagedObject(entity: entityDescription, insertIntoManagedObjectContext: self.context)
@@ -135,7 +131,6 @@ class SendFriendRequestViewController: UIViewController, UITextViewDelegate {
             self.context?.save(nil)
             
         }
-
     }
     
     // TODO:
@@ -146,6 +141,7 @@ class SendFriendRequestViewController: UIViewController, UITextViewDelegate {
         
         var results: NSArray = self.context!.executeFetchRequest(request, error: nil)!
         
+        println("read from caching:  count = \(results.count)")
         if results.count > 0 {
             var result = results[0] as! NSManagedObject
             return result.valueForKey("content") as! String
@@ -154,4 +150,36 @@ class SendFriendRequestViewController: UIViewController, UITextViewDelegate {
     }
     
 
+    // Moving the key board up
+    func textViewDidBeginEditing(textView: UITextView) {
+        animateViewMoving(true, moveValue: 100)
+    }
+    
+    func textViewDidEndEditing(textView: UITextView) {
+        animateViewMoving(false, moveValue: 100)
+    }
+    
+    
+    func animateViewMoving (up:Bool, moveValue :CGFloat){
+        var movementDuration:NSTimeInterval = 0.3
+        var movement:CGFloat = ( up ? -moveValue : moveValue )
+        UIView.beginAnimations( "animateView", context: nil)
+        UIView.setAnimationBeginsFromCurrentState(true)
+        UIView.setAnimationDuration(movementDuration )
+        self.view.frame = CGRectOffset(self.view.frame, 0,  movement)
+        UIView.commitAnimations()
+    }
+    
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        
+        if(range.length == 0){
+            if(text == "\n"){
+                textView.resignFirstResponder()
+                return false
+            }
+            
+        }
+        return true
+        
+    }
 }
