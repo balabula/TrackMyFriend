@@ -142,6 +142,7 @@ class MyPostViewController: UIViewController, UITableViewDataSource, UITableView
         return cell
         
     }
+    
     @IBAction func didClickPostButton(sender: AnyObject) {
         
         //        println("hasWifi = \(self.hasWifi)")
