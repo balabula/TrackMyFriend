@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8121.17" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8101.14"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="ZiN-n1-aHl" customClass="LoginView" customModule="TrackYourFriends" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="260" height="30"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CYQ-kI-GI5">
+                    <rect key="frame" x="30" y="0.0" width="200" height="30"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9ya-hB-Oiv">
+                    <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                    <animations/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="30" id="OLa-RJ-tJB"/>
+                    </constraints>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oDB-Pk-U72">
+                    <rect key="frame" x="230" y="0.0" width="30" height="30"/>
+                    <animations/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="30" id="QQX-Im-Hte"/>
+                    </constraints>
+                </imageView>
+            </subviews>
+            <animations/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="CYQ-kI-GI5" secondAttribute="trailing" constant="30" id="3qO-wI-TLq"/>
+                <constraint firstAttribute="trailing" secondItem="oDB-Pk-U72" secondAttribute="trailing" id="D2J-Ua-C1L"/>
+                <constraint firstAttribute="bottom" secondItem="9ya-hB-Oiv" secondAttribute="bottom" id="MCw-AV-aPp"/>
+                <constraint firstItem="oDB-Pk-U72" firstAttribute="top" secondItem="ZiN-n1-aHl" secondAttribute="top" id="Neu-yl-LfN"/>
+                <constraint firstAttribute="bottom" secondItem="oDB-Pk-U72" secondAttribute="bottom" id="P9z-Db-5u1"/>
+                <constraint firstItem="CYQ-kI-GI5" firstAttribute="leading" secondItem="ZiN-n1-aHl" secondAttribute="leading" constant="30" id="W0b-Lb-9iS"/>
+                <constraint firstItem="9ya-hB-Oiv" firstAttribute="top" secondItem="ZiN-n1-aHl" secondAttribute="top" id="fMg-VU-7Uk"/>
+                <constraint firstItem="CYQ-kI-GI5" firstAttribute="top" secondItem="ZiN-n1-aHl" secondAttribute="top" id="gxd-22-nXj"/>
+                <constraint firstItem="9ya-hB-Oiv" firstAttribute="leading" secondItem="ZiN-n1-aHl" secondAttribute="leading" id="lQq-0h-JCS"/>
+                <constraint firstAttribute="bottom" secondItem="CYQ-kI-GI5" secondAttribute="bottom" id="zGJ-wU-O95"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="leftImage" destination="9ya-hB-Oiv" id="OcQ-ZB-jho"/>
+                <outlet property="rightImage" destination="oDB-Pk-U72" id="Vvy-qg-05q"/>
+                <outlet property="text" destination="CYQ-kI-GI5" id="hKK-M1-gd2"/>
+            </connections>
+            <point key="canvasLocation" x="282" y="321"/>
+        </view>
+    </objects>
+</document>
