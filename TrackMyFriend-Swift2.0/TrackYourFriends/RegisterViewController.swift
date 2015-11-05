@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 class RegisterViewController: UIViewController {
     
@@ -17,7 +18,7 @@ class RegisterViewController: UIViewController {
     @IBOutlet weak var txtName: UITextField!
     
     @IBOutlet weak var btnRegister: UIButton!
-
+    
     
     var spinnerHelper: SpinnerHelper?
     override func viewDidLoad() {
@@ -61,4 +62,78 @@ class RegisterViewController: UIViewController {
     }
     
     
+    
+    @IBAction func btnRegisterDidClick(sender: AnyObject) {
+        
+        
+        if(txtEmail.text!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()) == ""){
+            let alert = UIAlertView(title: "Please Check", message: "Email address is empty", delegate: nil, cancelButtonTitle: "OK")
+            alert.show()
+            return
+        }
+        
+        if(txtName.text!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()) == ""){
+            let alert = UIAlertView(title: "Please Check", message: "User name is empty", delegate: nil, cancelButtonTitle: "OK")
+            alert.show()
+            return
+        }
+        
+        
+        if(txtPwd.text!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()) == ""){
+            let alert = UIAlertView(title: "Please Check", message: "Password is empty", delegate: nil, cancelButtonTitle: "OK")
+            alert.show()
+            return
+        }
+        
+         registerNewUser(self.txtEmail.text!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()), password: self.txtPwd.text!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()), username: self.txtName.text!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()))
+        
+    }
+    
+    private func registerNewUser(email: String, password: String, username: String){
+        
+        var user = PFUser()
+        user.email = email
+        user.password = password
+        user.username = username
+        user.signUpInBackgroundWithBlock(completionBlock)
+        
+        // Spinner
+        self.spinnerHelper!.showModalIndicatorView()
+    }
+    
+    lazy var completionBlock: (Bool, NSError?)-> Void = {
+        [unowned self] (success:Bool, error: NSError?) -> Void in
+        
+        self.spinnerHelper!.removeIndicatorControllerFromView()
+        if error == nil {
+            var alert = UIAlertView(title: "Congradulations", message: "\(self.txtEmail.text!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())) has been successfully registered", delegate: nil, cancelButtonTitle: "OK")
+            
+            alert.show()
+            
+            print("Redirecting")
+            // Popping Back the parent View - Call the Segue
+            self.performSegueWithIdentifier("exitSegue", sender: self)
+            
+        } else {
+            print(error!.code)
+            if(error!.code == 203){
+                var alert = UIAlertView(title: "Notice", message: "Email has already been registered", delegate: nil, cancelButtonTitle: "OK")
+                alert.show()
+                print("Email has already been registered")
+            }else if(error!.code == 125){
+                var alert = UIAlertView(title: "Notice", message: "Invalid Email Address", delegate: nil, cancelButtonTitle: "OK")
+                alert.show()
+                print("Invalid Email Address")
+            }else if(error!.code == 202){
+                var alert = UIAlertView(title: "Notice", message: "Usename has already been taken", delegate: nil, cancelButtonTitle: "OK")
+                alert.show()
+                print("User name has already been registered")
+            }else if (error!.code == 100){
+                print("Time out")
+                var alert = UIAlertView(title: "Notice", message: "Connection Time out, please try it later", delegate: nil, cancelButtonTitle: "OK")
+                alert.show()
+            }
+            // Examine the error object and inform the user.
+        }
+    }
 }

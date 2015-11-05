@@ -10,31 +10,31 @@
 	<string>TrackYourFriends</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>622F895E5E667D0A417A4ECCDF93E3B6856F62A6</key>
-		<string>https://github.com/balabula/TrackYourFriends---Swift2.git</string>
+		<key>197F074125BCF3B92142D9421953B3163A74296D</key>
+		<string>https://github.com/balabula/TrackMyFriend.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>TrackYourFriends.xcworkspace</string>
+	<string>TrackMyFriend-Swift2.0/TrackYourFriends.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>622F895E5E667D0A417A4ECCDF93E3B6856F62A6</key>
-		<string>..</string>
+		<key>197F074125BCF3B92142D9421953B3163A74296D</key>
+		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/balabula/TrackYourFriends---Swift2.git</string>
+	<string>https://github.com/balabula/TrackMyFriend.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>622F895E5E667D0A417A4ECCDF93E3B6856F62A6</string>
+	<string>197F074125BCF3B92142D9421953B3163A74296D</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>622F895E5E667D0A417A4ECCDF93E3B6856F62A6</string>
+			<string>197F074125BCF3B92142D9421953B3163A74296D</string>
 			<key>IDESourceControlWCCName</key>
-			<string>TrackMyFriendUpdated</string>
+			<string>TrackMyFriend</string>
 		</dict>
 	</array>
 </dict>
