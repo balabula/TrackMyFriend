@@ -9,10 +9,9 @@
 
 import UIKit
 import Parse
-import FBSDKLoginKit
-import FBSDKCoreKit
 
-class ViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButtonDelegate {
+
+class ViewController: UIViewController, UITextFieldDelegate {
     
     
     
@@ -31,7 +30,6 @@ class ViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButtonDel
     @IBOutlet weak var txtUserName: UITextField!
     
     
-    @IBOutlet weak var btnFBLogin: FBSDKLoginButton!
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -53,8 +51,6 @@ class ViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButtonDel
         self.btnLogin.layer.cornerRadius = 2
         self.btnLogin.layer.borderWidth = 1
         self.btnLogin.layer.borderColor = UIColor.orangeColor().CGColor
-
-        self.btnFBLogin.delegate = self
         
         self.btnRegister.layer.cornerRadius = 2
         self.btnRegister.layer.borderWidth = 1
@@ -100,43 +96,10 @@ class ViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButtonDel
         self.imgDelete.hidden = hidesBottomBarWhenPushed
     }
     
-
-    
-    func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
-        print("logout.")
-    }
-    
-    func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
-        if ((error) != nil)
-        {
-            //handle error
-        } else {
-
-            print("result = \(result)")
-            //  returnUserData()
-        }
-    }
-    
-    func returnUserData()
-    {
+    @IBAction func unwindByBackButton(segue: UIStoryboardSegue) {
         
-        
-        let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields":"id,interested_in,gender,birthday,email,age_range,name,picture.width(480).height(480)"])
-        graphRequest.startWithCompletionHandler({ (connection, result, error) -> Void in
-            
-            if ((error) != nil)
-            {
-                // Process error
-                print("Error: \(error)")
-            }
-            else
-            {
-                print("fetched user: \(result)")
-                let id : NSString = result.valueForKey("id") as! String
-                print("User ID is: \(id)")
-                //etc...
-            }
-        })
     }
+    
+    
 }
 

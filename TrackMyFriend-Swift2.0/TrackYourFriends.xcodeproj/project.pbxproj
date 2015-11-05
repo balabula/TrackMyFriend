@@ -27,6 +27,9 @@
 		8E5F98251BEA4AC100C72ED4 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E5F98241BEA4AC100C72ED4 /* LoginView.swift */; };
 		8E5F982C1BEA58A700C72ED4 /* delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E5F982A1BEA58A700C72ED4 /* delete.png */; };
 		8E5F982D1BEA58A700C72ED4 /* visable.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E5F982B1BEA58A700C72ED4 /* visable.png */; };
+		8EB523DA1BEAE1D400E75BC9 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB523D91BEAE1D400E75BC9 /* RegisterViewController.swift */; };
+		8EB523DD1BEAE3E200E75BC9 /* SpinnerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB523DC1BEAE3E200E75BC9 /* SpinnerHelper.swift */; };
+		8EB523DF1BEAE41400E75BC9 /* InternetStatusDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB523DE1BEAE41400E75BC9 /* InternetStatusDetector.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +59,9 @@
 		8E5F98241BEA4AC100C72ED4 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		8E5F982A1BEA58A700C72ED4 /* delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete.png; sourceTree = "<group>"; };
 		8E5F982B1BEA58A700C72ED4 /* visable.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = visable.png; sourceTree = "<group>"; };
+		8EB523D91BEAE1D400E75BC9 /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		8EB523DC1BEAE3E200E75BC9 /* SpinnerHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpinnerHelper.swift; sourceTree = "<group>"; };
+		8EB523DE1BEAE41400E75BC9 /* InternetStatusDetector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InternetStatusDetector.swift; sourceTree = "<group>"; };
 		8ED36B531BEA667E006C8D9C /* TrackYourFriends-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TrackYourFriends-Bridging-Header.h"; sourceTree = "<group>"; };
 		DD7E27B26A0F288A3257FE67 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -122,9 +128,10 @@
 		81BA81471A49DA1800E65899 /* TrackYourFriends */ = {
 			isa = PBXGroup;
 			children = (
+				8EB523DB1BEAE3C100E75BC9 /* Utility */,
+				8EB523D81BEAE1BD00E75BC9 /* Controller */,
 				8E5F98131BEA2F0C00C72ED4 /* Views */,
 				81BA814A1A49DA1800E65899 /* AppDelegate.swift */,
-				81BA814C1A49DA1800E65899 /* ViewController.swift */,
 				814C3AC61B69877600E307BB /* Main.storyboard */,
 				8ED36B531BEA667E006C8D9C /* TrackYourFriends-Bridging-Header.h */,
 			);
@@ -177,6 +184,24 @@
 				8E5F981C1BEA37A000C72ED4 /* user.png */,
 			);
 			name = icon;
+			sourceTree = "<group>";
+		};
+		8EB523D81BEAE1BD00E75BC9 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				81BA814C1A49DA1800E65899 /* ViewController.swift */,
+				8EB523D91BEAE1D400E75BC9 /* RegisterViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		8EB523DB1BEAE3C100E75BC9 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				8EB523DC1BEAE3E200E75BC9 /* SpinnerHelper.swift */,
+				8EB523DE1BEAE41400E75BC9 /* InternetStatusDetector.swift */,
+			);
+			name = Utility;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -321,9 +346,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8EB523DF1BEAE41400E75BC9 /* InternetStatusDetector.swift in Sources */,
 				8E5F98251BEA4AC100C72ED4 /* LoginView.swift in Sources */,
 				81BA814D1A49DA1800E65899 /* ViewController.swift in Sources */,
+				8EB523DD1BEAE3E200E75BC9 /* SpinnerHelper.swift in Sources */,
 				81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */,
+				8EB523DA1BEAE1D400E75BC9 /* RegisterViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
