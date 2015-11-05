@@ -13,7 +13,7 @@ import Parse
 
 class ViewController: UIViewController, UITextFieldDelegate {
     
-    
+    private var spinnerHelper: SpinnerHelper?
     
     @IBOutlet weak var btnClear: UIButton!
     @IBOutlet weak var btnPwd: UIButton!
@@ -35,6 +35,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
         // Do any additional setup after loading the view, typically from a nib.
         //        test()
         initUI()
+        
+        let monitor = InternetStatusDetector.sharedInstance
+        monitor.startMonitoring(errorMessage: "The internet is not avaialble")
+        self.spinnerHelper = SpinnerHelper(parentViewController: self)
     }
     
     
@@ -91,6 +95,12 @@ class ViewController: UIViewController, UITextFieldDelegate {
         self.txtPwd.secureTextEntry = !self.txtPwd.secureTextEntry
     }
     
+
+    @IBAction func btnLoginDidClick(sender: AnyObject) {
+        self.spinnerHelper!.showModalIndicatorView()
+        checkCredential(name: self.txtUserName.text!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()), pwd: self.txtPwd!.text!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()))
+    }
+    
     @IBAction func clearButtonDidClick(sender: AnyObject) {
         self.txtUserName.text = ""
         self.imgDelete.hidden = hidesBottomBarWhenPushed
@@ -98,8 +108,70 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func unwindByBackButton(segue: UIStoryboardSegue) {
         
+        clearUI()
     }
     
+    // Shift the keyboard
+    func textFieldDidBeginEditing(textField: UITextField) {
+        animateViewMoving(true, moveValue: 100)
+    }
+    func textFieldDidEndEditing(textField: UITextField) {
+        animateViewMoving(false, moveValue: 100)
+    }
+    
+    // MARK: UI function
+    
+    private func animateViewMoving (up:Bool, moveValue :CGFloat){
+        var movementDuration:NSTimeInterval = 0.3
+        var movement:CGFloat = ( up ? -moveValue : moveValue)
+        UIView.beginAnimations( "animateView", context: nil)
+        UIView.setAnimationBeginsFromCurrentState(true)
+        UIView.setAnimationDuration(movementDuration )
+        self.view.frame = CGRectOffset(self.view.frame, 0,  movement)
+        UIView.commitAnimations()
+    }
+    
+    private func clearUI(){
+        if self.txtPwd.text != nil {
+            self.txtPwd.text = ""
+        }
+        
+        if self.txtUserName.text != nil{
+            self.txtUserName.text = ""
+        }
+
+    }
+    
+    // MARK: Parse Function
+    func checkCredential(name name: String, pwd: String) {
+        
+        PFUser.logInWithUsernameInBackground(name, password: pwd, block: loginCompletionBlock)
+    }
+    
+    lazy var loginCompletionBlock: (PFUser?, NSError?) -> Void = {
+        [unowned self] (user: PFUser?, error: NSError?) -> Void in
+        print("user = \(user), error = \(error)")
+        
+        self.spinnerHelper!.removeIndicatorControllerFromView()
+        
+        
+        if let err = error {
+            if (err.code == 100){
+                print("Time out")
+                var alert = UIAlertView(title: "Notice", message: "Connection Time out, please try it later", delegate: nil, cancelButtonTitle: "OK")
+                alert.show()
+            }else{
+                print("Wrong Password")
+                var alert = UIAlertView(title: "Notice", message: "The entered password is not correct", delegate: nil, cancelButtonTitle: "OK")
+                alert.show()
+            }
+            
+        } else {
+            // Go to new Page
+            self.performSegueWithIdentifier("loginSegue", sender: self)
+        }
+        
+    }
     
 }
 

@@ -91,7 +91,7 @@ class RegisterViewController: UIViewController {
     
     private func registerNewUser(email: String, password: String, username: String){
         
-        var user = PFUser()
+        let user = PFUser()
         user.email = email
         user.password = password
         user.username = username
