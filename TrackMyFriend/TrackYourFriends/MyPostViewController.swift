@@ -30,6 +30,7 @@ class MyPostViewController: UIViewController, UITableViewDataSource, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
         
         self.txtPost.delegate = self
         //        var network: InternetStatusDetector = InternetStatusDetector.sharedInstance

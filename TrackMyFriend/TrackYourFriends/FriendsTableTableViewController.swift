@@ -65,9 +65,6 @@ class FriendsTableTableViewController: UITableViewController {
         compFlag = false
         var query = PFQuery(className: "Friends", predicate: NSPredicate(format: "destFriend = %@", self.currentUser!))
         println("srcFriend = \(self.currentUser!)")
-        query.findObjectsInBackgroundWithBlock(completeFetchingFriendsList)
-        
-    }
     
     lazy var completeFetchingFriendsList: ([AnyObject]?, NSError?) -> Void = {
         [unowned self](objects: [AnyObject]?, error: NSError?) -> Void in
